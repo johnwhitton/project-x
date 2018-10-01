@@ -1,10 +1,16 @@
 import React from 'react';
+import TableRow from './TableRow.js';
+import TableColumn from './TableColumn.js';
 
 const Table = ({columns, rows}) => {
   return (
     <div className='table-container'>
-      {columns.map(column => <li>{column}</li>)}
-      {rows.map(row => <li>{row.name}</li>)}
+      <table>
+        <tr>
+          {columns.map(column => <TableColumn column={column}/>)}
+        </tr>
+        {rows.map(row => <TableRow row={row}/>)}
+      </table>
     </div>
   )
 };

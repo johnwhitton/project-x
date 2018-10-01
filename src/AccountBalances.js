@@ -2,11 +2,11 @@ import React from 'react';
 import Table from './Table';
 
 const AccountBalances = () => {
-  const dataColumns = ['Name', 'Symbol', 'Balance', 'Address'];
+  const dataColumns = ['Asset', 'Symbol', 'Price', 'Total', 'Address'];
   const dataRows = [
-    {name: 'cowri', symbol: 'wri', balance: 0, key: '0x000'},
-    {name: 'cowri', symbol: 'wri', balance: 0, key: '0x001'},
-    {name: 'cowri', symbol: 'wri', balance: 0, key: '0x002'},
+    {asset: 'cowri', symbol: 'wri', price: 0, total: 100, key: '0x000'},
+    {asset: 'cowri', symbol: 'wri', price: 0, total: 100, key: '0x001'},
+    {asset: 'cowri', symbol: 'wri', price: 0, total: 100, key: '0x002'},
   ];
   return (
     <div className='account-balances-container'>
