@@ -1,8 +1,12 @@
 import React from 'react';
 
-const TableColumn = ({column}) => {
+const TableColumn = ({data}) => {
   return (
-    <th>{column}</th>
+    <div className='table-column-container'>
+      {data.map((column, index) => (
+        <div className={`column-item ${column.className}`} key={index}>{column.name}</div>
+      ))}
+    </div>
   )
 };
 

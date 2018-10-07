@@ -1,12 +1,19 @@
 import React from 'react';
+ 
+ const formatter = new Intl.NumberFormat('en-US', {
+   style: 'currency',
+   currency: 'USD',
+   minimumFractionDigits: 2,
+ });
 
-const TableRow = ({row}) => {
+const TableRow = ({data}) => {
   return (
-    <tr>
-      {Object.keys(row).map(key => 
-        <td>{row[key]}</td>
-      )}
-    </tr>
+    <div className='table-row-container'>
+      <div className='row-item row-asset'>{data.asset}</div>
+      <div className='row-item row-quantity'>{`${data.quantity} ${data.symbol}`}</div>
+      <div className='row-item row-price'>{formatter.format(data.price)}</div>
+      <div className='row-item row-total'>{formatter.format(data.total)}</div>
+    </div>
   )
 };
 

@@ -5,12 +5,10 @@ import TableColumn from './TableColumn.js';
 const Table = ({columns, rows}) => {
   return (
     <div className='table-container'>
-      <table>
-        <tr>
-          {columns.map(column => <TableColumn column={column}/>)}
-        </tr>
-        {rows.map(row => <TableRow row={row}/>)}
-      </table>
+      <TableColumn data={columns}/>
+        {Object.keys(rows).map(row => (
+          <TableRow data={rows[row]} key={rows[row].address}/>
+        ))}
     </div>
   )
 };
