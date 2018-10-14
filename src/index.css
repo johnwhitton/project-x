@@ -15,7 +15,6 @@
   --button-color-primary: #6A7FDF;
   --button-color-secondary: #55B57D;
   --button-color-alt: #6C9AEE;
-  --column-text-color-primary: #6A7FDF;
 }
 
 body {
@@ -80,8 +79,6 @@ body {
 }
 
 .base-container {
-  /*display: flex;*/
-  /*justify-content: center;*/
   background-color: var(--base-bg-color-primary);
   align-items: center;
   min-height: 200px;
@@ -212,9 +209,19 @@ body {
   justify-content: space-between;
 }
 
+.table-footer-message {
+  font-size: 12px;
+  padding-top: 16px;
+  color: var(--metamask-text-color-primary);
+}
+
+.footer-icon {
+  margin-right: 6px;
+}
+
 .column-item {
   text-transform: uppercase;
-  color: var(--metamask-text-color-secondary);
+  color: var(--button-color-primary);
   font-weight: 500;
   font-size: 16px;
   letter-spacing: 0.2em;
@@ -223,7 +230,7 @@ body {
   padding-bottom: 14px;
 }
 
-.row-item {
+.cowri-row-item, .row-item {
   width: 100%;
   border-bottom: 2px solid var(--table-item-border-primary);
   color: var(--table-item-text-primary);
@@ -231,26 +238,21 @@ body {
   padding-bottom: 12px;
 }
 
-.column-asset { 
-  color: var(--column-text-color-primary);
+.cowri-row-item {
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .column-quantity {
-  color: var(--column-text-color-primary);
   text-align: right;
 }
 
 .column-price {
-  color: var(--column-text-color-primary);
   text-align: right;
 }
 
 .column-total {
-  color: var(--column-text-color-primary);
   text-align: right;
-}
-
-.row-asset {
 }
 
 .row-quantity {
