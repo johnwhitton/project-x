@@ -156,7 +156,7 @@ body {
   padding: 8px 12px;
   text-align: center;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
   box-shadow: 0 4px 6px 0 rgba(50,50,93,0.11), 0 1px 3px 0 rgba(0,0,0,0.08), inset 0 0 1px 0 rgba(0,0,0,0.06);
   margin-left: 4px;
   margin-right: 4px;
@@ -257,16 +257,19 @@ body {
   /*width: 20%;*/
   text-align: right;
   text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .row-price {
   /*width: 20%;*/
   text-align: right;
+  letter-spacing: 0.1em;
 }
 
 .row-total {
   /*width: 30%;*/
   text-align: right;
+  letter-spacing: 0.1em;
 }
 
 /* Extra small devices (phones, 600px and down) */
