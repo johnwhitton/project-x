@@ -5,27 +5,26 @@ import TableColumn from './TableColumn.js';
 
 class Table extends Component {
   state = {
-    showTokens: false,
+    showAdditionalTokens: false,
   }
   toggleTokenStatus = () =>{
-    console.log('here', this)
     this.setState(prevState => ({
-      showTokens: !prevState.showTokens
+      showAdditionalTokens: !prevState.showAdditionalTokens
     }));
   }
   render() {
     const {columns, rows} = this.props;
-    const {showTokens} = this.state;
+    const {showAdditionalTokens} = this.state;
     const cowriRow = {
       asset: 'Cowri', quantity: 31530.427222, symbol: 'wri', price: 1, total: 12051.91, address: '0x000'
     };
     const tokenCount = Object.keys(rows).length;
-    const toggleFooterText = showTokens ? 'Hide' : 'Show';
+    const toggleFooterText = showAdditionalTokens ? 'Hide' : 'Show';
     return (
       <div className='table-container'>
         <TableColumn data={columns}/>
         <CowriRow data={cowriRow} key={cowriRow.address}/>
-        {this.state.showTokens && Object.keys(rows).map(row => (
+        {this.state.showAdditionalTokens && Object.keys(rows).map(row => (
           // TODO: Add animation for opening additional tokens
           <TableRow data={rows[row]} key={rows[row].address}/>
         ))}
