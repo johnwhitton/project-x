@@ -211,6 +211,7 @@ body {
 
 .table-footer-message {
   font-size: 12px;
+  font-weight: 500;
   padding-top: 16px;
   color: var(--metamask-text-color-primary);
 }
