@@ -14,6 +14,7 @@
   --table-item-text-primary: #4F5566;
   --button-color-primary: #6A7FDF;
   --button-color-secondary: #55B57D;
+  --button-color-alt: #6C9AEE;
 }
 
 body {
@@ -165,12 +166,20 @@ body {
   background-color: var(--button-color-secondary); 
 }
 
-.btn-send, .btn-receive {
+.btn-send {
+  background-color: var(--button-color-alt);
+}
+
+.btn-receive {
   background-color: var(--button-color-primary);
 }
 
 .btn:focus {
   outline: none;
+}
+
+.btn-icon {
+  margin-right: 6px;
 }
 
 .metamask-container {
