@@ -19,7 +19,8 @@ class Table extends Component {
       asset: 'Cowri', quantity: 31530.427222, symbol: 'wri', price: 1, total: 12051.91, address: '0x000'
     };
     const tokenCount = Object.keys(rows).length;
-    const toggleFooterText = showAdditionalTokens ? 'Hide' : 'Show';
+    const tokenNounForm = tokenCount > 1 ? 'tokens' : 'token';
+    const tableFooterAction = showAdditionalTokens ? 'Hide' : 'Show';
     return (
       <div className='table-container'>
         <TableColumn data={columns}/>
@@ -32,7 +33,7 @@ class Table extends Component {
             className='table-footer-message'
             onClick={this.toggleTokenStatus}>
               <i className="fas fa-coins footer-icon"></i>
-              <span>{`${toggleFooterText} ${tokenCount} additional tokens`}</span>
+              <span>{`${tableFooterAction} ${tokenCount} additional ${tokenNounForm}`}</span>
           </div>
       </div>
     )
