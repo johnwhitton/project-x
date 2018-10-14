@@ -25,6 +25,7 @@ class Table extends Component {
         <TableColumn data={columns}/>
         <CowriRow data={cowriRow} key={cowriRow.address}/>
         {this.state.showTokens && Object.keys(rows).map(row => (
+          // TODO: Add animation for opening additional tokens
           <TableRow data={rows[row]} key={rows[row].address}/>
         ))}
           <div 
