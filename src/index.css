@@ -15,6 +15,7 @@
   --button-color-primary: #6A7FDF;
   --button-color-secondary: #55B57D;
   --button-color-alt: #6C9AEE;
+  --column-text-color-primary: #6A7FDF;
 }
 
 body {
@@ -167,7 +168,7 @@ body {
 }
 
 .btn-send {
-  background-color: var(--button-color-alt);
+  background-color: var(--button-color-primary);
 }
 
 .btn-receive {
@@ -231,43 +232,39 @@ body {
 }
 
 .column-asset { 
-  /*width: 30%;*/
+  color: var(--column-text-color-primary);
 }
 
 .column-quantity {
-  /*width: 20%;*/
+  color: var(--column-text-color-primary);
   text-align: right;
 }
 
 .column-price {
-  /*width: 20%;*/
+  color: var(--column-text-color-primary);
   text-align: right;
 }
 
 .column-total {
-  /*width: 30%;*/
+  color: var(--column-text-color-primary);
   text-align: right;
 }
 
 .row-asset {
-  /*width: 30%;*/
 }
 
 .row-quantity {
-  /*width: 20%;*/
   text-align: right;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
 .row-price {
-  /*width: 20%;*/
   text-align: right;
   letter-spacing: 0.1em;
 }
 
 .row-total {
-  /*width: 30%;*/
   text-align: right;
   letter-spacing: 0.1em;
 }
