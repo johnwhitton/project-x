@@ -33,7 +33,7 @@ class Table extends Component {
             className='table-footer-message'
             onClick={this.toggleTokenStatus}>
               <i className="fas fa-coins footer-icon"></i>
-              <span>{`${tableFooterAction} ${tokenCount} additional ${tokenNounForm}`}</span>
+              <span>{`${tableFooterAction} ${tokenCount} additional shell ${tokenNounForm}`}</span>
           </div>
       </div>
     )
