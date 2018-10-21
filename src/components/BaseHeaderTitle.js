@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './cowri-logo-light.png';
+import logo from '../images/cowri-logo-light.png';
 
 const BaseHeaderTitle = () => {
   return (

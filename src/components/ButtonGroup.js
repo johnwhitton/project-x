@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import SendModal from './modals/SendModal';
+import SendModal from '../modals/SendModal';
 
 class ButtonGroup extends Component {
   state = {
