@@ -15,6 +15,9 @@
   --button-color-primary: #6A7FDF;
   --button-color-secondary: #55B57D;
   --button-color-alt: #6C9AEE;
+  --button-color-cancel: #727688;
+  --modal-background-color: #F7F8FC;
+  --modal-divider: #F1F2F6;
 }
 
 body {
@@ -160,6 +163,10 @@ body {
   margin-right: 4px;
 }
 
+.no-margin {
+  margin: 0;
+}
+
 .btn-create-shell {
   background-color: var(--button-color-secondary); 
 }
@@ -170,6 +177,10 @@ body {
 
 .btn-receive {
   background-color: var(--button-color-primary);
+}
+
+.btn-cancel {
+  background-color: var(--button-color-cancel);
 }
 
 .btn:focus {
@@ -270,6 +281,71 @@ body {
 .row-total {
   text-align: right;
   letter-spacing: 0.1em;
+}
+
+.send-modal-form {
+  width: 100%;
+}
+
+.send-modal-container {
+  display: flex;
+  max-width: 600px;
+  height: 400px;
+  background-color: var(--modal-background-color);
+  border-radius: 6px;
+  overflow: auto;
+  z-index: 9999;
+  margin: auto;
+}
+
+.send-modal-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.send-modal-input {
+  padding: 16px 16px;
+}
+
+.address-input {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.recipient-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.amount-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.send-modal-input > input {
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.send-modal-input > label {
+  color: var(--main-error-color-primary);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.send-button-group-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px solid var(--modal-divider);
+  padding: 16px;
 }
 
 /* Extra small devices (phones, 600px and down) */
