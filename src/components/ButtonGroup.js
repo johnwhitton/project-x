@@ -17,7 +17,7 @@ class ButtonGroup extends Component {
         <div className='button-group-container'>
           <button className='btn btn-create-shell'><i className="fas fa-plus btn-icon"></i>Create Shell</button>
           <button className='btn btn-receive'><i className="fas fa-qrcode btn-icon"></i>Receive</button>
-          <button className='btn btn-send' onClick={this.showSendModal}><i className="far fa-check-circle btn-icon"></i>Send</button>
+          <button className='btn btn-send' onClick={this.showSendModal}><i className="fas fa-arrow-circle-up btn-icon"></i>Send</button>
         </div>
       </div>
     )

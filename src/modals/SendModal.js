@@ -12,7 +12,7 @@ class SendModal extends Component {
       <form className='send-modal-form' action=''>
         <div className='send-modal-form-container'>
           <div className='send-modal-input address-input'>
-            <label htmlFor='wallet-address'><i className="far fa-check-circle btn-icon"></i>Send from Metamask Wallet</label>
+            <label htmlFor='wallet-address'><i className="fas fa-arrow-circle-up btn-icon"></i>Send from Metamask Wallet</label>
             <input type='text' className='wallet-address' placeholder='Cowri' disabled/>
           </div>
           <div className='send-modal-input recipient-input'>
@@ -27,7 +27,7 @@ class SendModal extends Component {
             <button className='btn btn-cancel no-margin' value='submit' onClick={(e) => e.preventDefault()}>Cancel</button>
             <span className='send-modal-fee'>Fee: $0.014</span>
             <button className='btn btn-send no-margin' value='submit' onClick={(e) => e.preventDefault()}>
-              <i className="far fa-check-circle btn-icon"></i>
+              <i className="fas fa-arrow-circle-up btn-icon"></i>
               Send
             </button>
           </div>
