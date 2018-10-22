@@ -18,6 +18,7 @@
   --button-color-cancel: #727688;
   --modal-background-color: #F7F8FC;
   --modal-divider: #F1F2F6;
+  --modal-placeholder-color: #BABAC8;
 }
 
 body {
@@ -251,6 +252,10 @@ body {
 }
 
 .cowri-row-item {
+  color: black;
+}
+
+.cowri-row-item {
   font-size: 20px;
   font-weight: 500;
 }
@@ -292,10 +297,11 @@ body {
   max-width: 600px;
   height: 400px;
   background-color: var(--modal-background-color);
-  border-radius: 6px;
+  border-radius: 12px;
   overflow: auto;
   z-index: 9999;
   margin: auto;
+  margin-top: 30px;
 }
 
 .send-modal-form-container {
@@ -307,6 +313,7 @@ body {
 
 .send-modal-input {
   padding: 16px 16px;
+  font-size: 14px;
 }
 
 .address-input {
@@ -328,15 +335,16 @@ body {
 .send-modal-input > input {
   border: none;
   outline: none;
-  border-radius: 6px;
+  border-radius: 12px;
   padding: 12px;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 500;
+  box-shadow: rgba(50, 50, 93, 0.11) 0px 4px 6px 0px, rgba(0, 0, 0, 0.08) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 0px 1px 0px inset;
 }
 
 .send-modal-input > label {
   color: var(--main-error-color-primary);
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 12px;
 }
 
@@ -346,6 +354,26 @@ body {
   align-items: center;
   border-top: 2px solid var(--modal-divider);
   padding: 16px;
+}
+
+.send-modal-fee {
+  font-size: 14px;
+  color: var(--main-error-color-primary);
+}
+
+.recipient-address::placeholder {
+  color: var(--modal-placeholder-color);
+  font-weight: 400;
+}
+
+.cowri-amount::placeholder {
+  color: var(--modal-placeholder-color);
+  font-weight: 400;
+}
+
+.wallet-address::placeholder {
+  color: black;
+  font-weight: 500;
 }
 
 /* Extra small devices (phones, 600px and down) */
