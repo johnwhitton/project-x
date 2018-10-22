@@ -9,7 +9,7 @@ class SendModal extends Component {
   render() {
     return (
      <div className='send-modal-container'>
-      <form className='send-modal-form' action='' autocomplete='false' autofill='false'>
+      <form className='send-modal-form' action=''>
         <div className='send-modal-form-container'>
           <div className='send-modal-input address-input'>
             <label htmlFor='wallet-address'><i className="far fa-check-circle btn-icon"></i>Send from Metamask Wallet</label>
