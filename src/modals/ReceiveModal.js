@@ -12,7 +12,7 @@ class ReceiveModal extends Component {
      <div className='receive-modal-container'>
         <div className='receive-modal-header'>
           <span>
-            <i class='fas fa-arrow-circle-down btn-icon'></i>
+            <i className='fas fa-arrow-circle-down btn-icon'></i>
               Receive to Metamask Wallet
           </span>
           <button className='btn btn-cancel no-margin' value='submit' onClick={(e) => e.preventDefault()}>Close</button>
