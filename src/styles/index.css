@@ -20,6 +20,7 @@
   --modal-divider: #F1F2F6;
   --modal-placeholder-color: #BABAC8;
   --modal-address-color: #727688;
+  --card-remove-color: #FF4C4C;
 }
 
 body {
@@ -110,6 +111,10 @@ body {
 }
 
 .account-balances-container {
+  padding: 16px;
+}
+
+.manage-shell-container {
   padding: 16px;
 }
 
@@ -434,6 +439,88 @@ body {
   font-weight: 500;
 }
 
+.manage-selection-message {
+  color: #52555E;
+  font-weight: 500;
+}
+
+.manage-token-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.token-card-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 6px;
+  padding: 16px;
+  height: 80px;
+  margin: 16px 16px 16px 16px; 
+  min-width: 15%;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  font-size: 20px;
+  outline: none;
+}
+
+.token-card-container:hover {
+  background-color: var(--button-color-primary);
+  box-shadow: rgba(50, 50, 93, 0.11) 
+    0px 4px 6px 0px, 
+    rgba(0, 0, 0, 0.08) 
+    0px 1px 3px 0px, 
+    rgba(0, 0, 0, 0.06) 
+    0px 0px 1px 0px inset;
+  color: white;
+}
+
+.add-token-card-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 6px;
+  padding: 16px;
+  height: 80px;
+  margin: 16px 16px 16px 16px; 
+  min-width: 15%;
+  color: #52555E;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
+
+.add-token-card-container:hover {
+  background-color: var(--button-color-primary);
+  box-shadow: rgba(50, 50, 93, 0.11) 
+    0px 4px 6px 0px, 
+    rgba(0, 0, 0, 0.08) 
+    0px 1px 3px 0px, 
+    rgba(0, 0, 0, 0.06);
+  color: white;
+}
+
+.fa-plus-circle {
+  font-size: 54px;
+}
+
+.token-image {
+  padding: 6px;
+}
+
+.token-card-remove {
+  position: absolute;
+  font-size: 90px;
+  color: #52555E;
+  opacity: 0.3;
+}
+
+.token-card-remove-hidden {
+  display: none;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   /*.base-container {background-color: red;}*/
@@ -474,4 +561,12 @@ body {
   .cowri-root {width: 970px;}
   .action-container {flex-direction: row;}
   .button-group-container {justify-content: flex-start;}
+}
+
+@media (max-width: 700px) {
+  .token-card-container {min-width: 33.33%};
+}
+
+@media (max-width: 400px) {
+  .token-card-container {min-width: 50%};
 }
