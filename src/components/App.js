@@ -6,8 +6,8 @@ import ReceiveModal from '../modals/ReceiveModal';
 
 const App = () => {
   const connected = true;
-  const showSendModal = true;
-  const showReceiveModal = true;
+  const showSendModal = false;
+  const showReceiveModal = false;
   return (
     <Fragment>
       <div className='cowri-root'>
