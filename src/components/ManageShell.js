@@ -15,6 +15,7 @@ import usdtImage from '../images/usdt.png';
 class ManageShell extends Component {
   state = {
     localShell: [],
+    tokensToBeRemoved: [],
     error: false,
     errorMessage: '',
   }
@@ -50,7 +51,7 @@ class ManageShell extends Component {
     }))
   }
 
-  removeLocalShellToken = token => {
+  removeLocalShellToken = async token => {
     if (!this.state.localShell.includes(token)) {
       this.setState({error: true, errorMessage: `Your shell does not contain ${token}!`});
       return;
@@ -61,6 +62,18 @@ class ManageShell extends Component {
     this.setState({localShell: updatedLocalShell,});
   }
 
+  setTokensToBeRemoved = tokenName => {
+    let updatedtokensToBeRemoved;
+    if (this.state.tokensToBeRemoved.includes(tokenName)) {
+      const targetIndex = this.state.tokensToBeRemoved.indexOf(tokenName);
+      updatedtokensToBeRemoved = [...this.state.tokensToBeRemoved];
+      updatedtokensToBeRemoved.splice(targetIndex, 1);
+    } else {
+      updatedtokensToBeRemoved = [...this.state.tokensToBeRemoved, tokenName];
+    }
+    this.setState({tokensToBeRemoved: updatedtokensToBeRemoved,});
+  }
+
   render() {
     const localShell = this.state.localShell;
     const selectionMessage = 'Which stablecoins would you like to accept?';
@@ -68,7 +81,13 @@ class ManageShell extends Component {
       <div className='manage-shell-container'>
         <span className='manage-selection-message'>{selectionMessage}</span>
         <div className='manage-token-items'>
-          {localShell.map(token => (<TokenCard token={token} key={token.name}/>))}
+          {localShell.map(token => (
+            <TokenCard 
+              token={token} 
+              key={token.name}
+              setTokensToBeRemoved={this.setTokensToBeRemoved}
+            />)
+          )}
           <AddTokenCard/>
         </div>
       </div>
