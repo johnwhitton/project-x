@@ -442,6 +442,7 @@ body {
 .manage-selection-message {
   color: #52555E;
   font-weight: 500;
+  font-size: 18px;
 }
 
 .manage-token-items {
