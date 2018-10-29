@@ -20,7 +20,7 @@
   --modal-divider: #F1F2F6;
   --modal-placeholder-color: #BABAC8;
   --modal-address-color: #727688;
-  --card-remove-color: #FF4C4C;
+  --card-remove-color: #FF1919;
 }
 
 body {
@@ -190,6 +190,10 @@ body {
   background-color: var(--button-color-cancel);
 }
 
+.btn-remove {
+  background: var(--card-remove-color);
+}
+
 .btn:focus {
   outline: none;
 }
@@ -197,6 +201,7 @@ body {
 .btn-icon {
   margin-right: 6px;
 }
+
 
 .metamask-container {
   display: flex;
@@ -520,6 +525,13 @@ body {
 
 .token-card-remove-hidden {
   display: none;
+}
+
+.manage-shell-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 33px;
 }
 
 /* Extra small devices (phones, 600px and down) */
