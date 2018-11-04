@@ -213,6 +213,14 @@ body {
   background: var(--card-remove-color);
 }
 
+.btn-remove:hover {
+  background-color: #ff7373;
+}
+
+.btn-remove:active {
+  background-color: #d94040;
+}
+
 .btn:focus {
   outline: none;
 }
