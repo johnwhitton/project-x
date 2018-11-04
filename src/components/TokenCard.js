@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 
 class TokenCard extends Component {
   state = {
@@ -14,12 +14,19 @@ class TokenCard extends Component {
   render() {
     const token = this.props.token;
     const className = this.state.toggleRemove ? 'token-card-remove' : 'token-card-remove-hidden';
+    const selectedShadow = this.state.toggleRemove ? 'shadow' : '';
     return (
-      <div className='token-card-container' onClick={this.toggleRemoveClass.bind(null, token.name)}>
-        <div className={className}><i className='fas fa-trash-alt'></i></div>
-        <img className='token-image' src={token.source} alt={`${token.name} logo`}/>
-        <span className='token-card-name'>{token.name}</span>
-      </div>
+      <Fragment>
+        <div 
+          className={`token-card-container ${selectedShadow}`} 
+          onClick={this.toggleRemoveClass.bind(null, token.name)}>
+            <img className='token-image' src={token.source} alt={`${token.name} logo`}/>
+            <span className='token-card-name'>{token.name}</span>
+        </div>
+        <div className='close-container'>
+          <span className={className}></span>
+        </div>
+      </Fragment>
     )
   }
 }

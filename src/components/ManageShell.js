@@ -93,7 +93,6 @@ class ManageShell extends Component {
     const localShell = this.state.localShell;
     const selectionMessage = 'Which stablecoins would you like to accept?';
     const tokensToBeRemoved = this.state.tokensToBeRemoved;
-    const tokenNounForm = tokensToBeRemoved.length > 1 ? 'tokens' : 'token';
     return (
       <div className='manage-shell-container'>
         <div className='manage-shell-header-container'>
@@ -104,7 +103,7 @@ class ManageShell extends Component {
               value='submit' 
               onClick={this.removeSelectedTokens}>
                 <i className='far fa-times-circle btn-icon'></i>
-                {`Remove ${tokenNounForm} from shell`}
+                {`Remove from shell`}
             </button>)}
         </div>
         <div className='manage-token-items'>

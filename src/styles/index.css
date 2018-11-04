@@ -12,7 +12,7 @@
   --metamask-text-color-secondary: #A2A5B1;
   --table-item-border-primary: #FBFBFB;
   --table-item-text-primary: #4F5566;
-  --button-color-primary: #6A7FDF;
+  --button-color-primary: #657FE6;
   --button-color-secondary: #55B57D;
   --button-color-alt: #6C9AEE;
   --button-color-cancel: #727688;
@@ -20,7 +20,7 @@
   --modal-divider: #F1F2F6;
   --modal-placeholder-color: #BABAC8;
   --modal-address-color: #727688;
-  --card-remove-color: #FF1919;
+  --card-remove-color: #FF6666;
 }
 
 body {
@@ -168,6 +168,17 @@ body {
   box-shadow: 0 4px 6px 0 rgba(50,50,93,0.11), 0 1px 3px 0 rgba(0,0,0,0.08), inset 0 0 1px 0 rgba(0,0,0,0.06);
   margin-left: 4px;
   margin-right: 4px;
+  transition: all 0.15s ease 0s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(1px);
+  opacity: 0.8;
+  color: #EAEDF9;
 }
 
 .no-margin {
@@ -175,11 +186,19 @@ body {
 }
 
 .btn-create-shell {
-  background-color: var(--button-color-secondary); 
+  background-color: #12B878; 
 }
 
 .btn-send {
   background-color: var(--button-color-primary);
+}
+
+.btn-send:hover, .btn-receive:hover {
+  background-color: #728cf3;
+}
+
+.btn-send:active, .btn-receive:active {
+  background-color: #3f59c0;
 }
 
 .btn-receive {
@@ -201,7 +220,6 @@ body {
 .btn-icon {
   margin-right: 6px;
 }
-
 
 .metamask-container {
   display: flex;
@@ -469,18 +487,20 @@ body {
   min-width: 15%;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
   font-size: 20px;
-  outline: none;
+  transition: all 0.15s ease 0s;
 }
 
 .token-card-container:hover {
-  background-color: var(--button-color-primary);
-  box-shadow: rgba(50, 50, 93, 0.11) 
-    0px 4px 6px 0px, 
-    rgba(0, 0, 0, 0.08) 
-    0px 1px 3px 0px, 
-    rgba(0, 0, 0, 0.06) 
-    0px 0px 1px 0px inset;
-  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.token-card-container:active {
+  transform: translateY(1px);
+}
+
+.shadow {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .add-token-card-container {
@@ -496,16 +516,21 @@ body {
   min-width: 15%;
   color: #52555E;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  transition: all 0.15s ease 0s;
 }
 
 .add-token-card-container:hover {
+  transform: translateY(-1px);
   background-color: var(--button-color-primary);
-  box-shadow: rgba(50, 50, 93, 0.11) 
-    0px 4px 6px 0px, 
-    rgba(0, 0, 0, 0.08) 
-    0px 1px 3px 0px, 
-    rgba(0, 0, 0, 0.06);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   color: white;
+}
+
+.add-token-card-container:active {
+  background-color: #3f59c0;
+  color: white;
+  opacity: 0.8;
+  transform: translateY(1px);
 }
 
 .fa-plus-circle {
@@ -516,11 +541,10 @@ body {
   padding: 6px;
 }
 
-.token-card-remove {
-  position: absolute;
-  font-size: 90px;
-  color: #52555E;
-  opacity: 0.3;
+.close-container {
+  position: relative;
+  width: 0;
+  height: 0;
 }
 
 .token-card-remove-hidden {
@@ -533,6 +557,41 @@ body {
   align-items: center;
   height: 33px;
 }
+
+.token-card-remove {
+  top: 6px;
+  right: 6px;
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  border: 2px solid white;
+  background-color: #52555E;
+  box-shadow: 0 0 3px #ccc;
+  border-radius: 50%;
+}
+
+.token-card-remove::before, .token-card-remove::after {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  width: 13px;
+  height: 3px;
+  content: "";
+  background-color: white;
+}
+
+.token-card-remove::before {
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.token-card-remove::after {
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
