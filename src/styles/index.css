@@ -556,6 +556,7 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 33px;
+  margin: 0 16px 0 16px;
 }
 
 .token-card-remove {
