@@ -1,4 +1,4 @@
-import CowriMath from '../CowriMath';
+import CowriMath from '../math/CowriMath';
 import {assert} from 'chai';
 
 it('Test adding two floating point numbers together', () => {
