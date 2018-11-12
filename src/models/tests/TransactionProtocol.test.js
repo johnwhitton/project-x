@@ -1,6 +1,6 @@
-import {CowriUser} from '../main/CowriUser';
-import {Token} from '../main/Token';
-import {CowriShell} from '../main/CowriShell';
+import {CowriUser} from '../CowriUser';
+import {Token} from '../Token';
+import {CowriShell} from '../CowriShell';
 import {assert} from 'chai';
 
 it ('Test the TransactionProtocol constructor', () => {

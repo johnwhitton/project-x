@@ -1,4 +1,4 @@
-import {Token} from '../main/Token';
+import {Token} from '../Token';
 import {assert} from 'chai';
 
 it('Test the constructor of the Token', () => {

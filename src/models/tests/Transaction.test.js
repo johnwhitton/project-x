@@ -1,7 +1,7 @@
-import {Transaction} from '../main/Transaction';
-import {CowriShell} from '../main/CowriShell';
-import {CowriUser} from '../main/CowriUser';
-import {Token} from '../main/Token';
+import {Transaction} from '../Transaction';
+import {CowriShell} from '../CowriShell';
+import {CowriUser} from '../CowriUser';
+import {Token} from '../Token';
 import {assert} from 'chai';
 
 let senderCowriUser;

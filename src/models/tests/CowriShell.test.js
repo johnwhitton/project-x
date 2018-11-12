@@ -1,5 +1,5 @@
-import {CowriShell} from '../main/CowriShell';
-import {Token} from '../main/Token';
+import {CowriShell} from '../CowriShell';
+import {Token} from '../Token';
 import {assert} from 'chai';
 
 it ('Test the CowriShell constructor', () => {

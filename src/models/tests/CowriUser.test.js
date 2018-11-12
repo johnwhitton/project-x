@@ -1,7 +1,7 @@
 import {assert} from 'chai';
-import {CowriUser} from '../main/CowriUser';
-import {CowriShell} from '../main/CowriShell';
-import {Token} from '../main/Token';
+import {CowriUser} from '../CowriUser';
+import {CowriShell} from '../CowriShell';
+import {Token} from '../Token';
 
 it ('Test CowriUser constructor', () => {
   let tokenArray = [new Token('tokenA', 'tknA')];
