@@ -7,7 +7,7 @@ import Metamask from './Metamask';
 
 class Account extends Component {
   state = {
-    view: 'shell',
+    view: 'balances',
   }
   setViewMode = view => {
     this.setState({view: view});

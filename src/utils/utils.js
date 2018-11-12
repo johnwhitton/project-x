@@ -1,4 +1,4 @@
-import CowriMath from './CowriMath';
+import CowriMath from './math/CowriMath';
 /**
  * Converts token value to proper decimal places
  * @param {string} value - the value of token
