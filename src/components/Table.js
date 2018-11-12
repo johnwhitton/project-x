@@ -14,20 +14,22 @@ class Table extends Component {
   }
   render() {
     const {columns, rows} = this.props;
+    const cowriRow = rows[0];
+    const tokenRows = rows.slice(1, rows.length);
     const {showAdditionalTokens} = this.state;
-    const cowriRow = {
-      asset: 'Cowri', quantity: 31530.427222, symbol: 'wri', price: 1, total: 12051.91, address: '0x000'
-    };
-    const tokenCount = Object.keys(rows).length;
+    // const cowriRow = {
+    //   asset: 'Cowri', quantity: 31530.427222, symbol: 'wri', price: 1, total: 12051.91, address: '0x000'
+    // };
+    const tokenCount = Object.keys(tokenRows).length;
     const tokenNounForm = tokenCount > 1 ? 'tokens' : 'token';
     const tableFooterAction = showAdditionalTokens ? 'Hide' : 'Show';
     return (
       <div className='table-container'>
         <TableColumn data={columns}/>
         <CowriRow data={cowriRow} key={cowriRow.address}/>
-        {this.state.showAdditionalTokens && Object.keys(rows).map(row => (
+        {this.state.showAdditionalTokens && Object.keys(tokenRows).map(row => (
           // TODO: Add transition for opening additional tokens
-          <TableRow data={rows[row]} key={rows[row].address}/>
+          <TableRow data={tokenRows[row]} key={tokenRows[row].address}/>
         ))}
           <div 
             className='table-footer-message'

@@ -9,21 +9,24 @@ class Account extends Component {
   state = {
     view: 'balances',
   }
+
   setViewMode = view => {
     this.setState({view: view});
   }
+
   render() {
     const view = this.state.view;
+    const {account, web3} = this.props;
     return (
       <div className='account-container'>
         <div className='account-top'>
           <div className='action-container'>
-            <Metamask/>
+            <Metamask account={account}/>
             <ButtonGroup/>
           </div>
         </div>
         <div className='account-bottom'>
-          {view === 'balances' && (<AccountBalances/>)}
+          {view === 'balances' && (<AccountBalances web3={web3}/>)}
           {view === 'shell' && (<ManageShell/>)}
         </div>
       </div>

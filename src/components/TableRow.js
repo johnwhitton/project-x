@@ -1,16 +1,19 @@
 import React from 'react';
  
  const USDFormatter = new Intl.NumberFormat('en-US', {
-   style: 'currency',
-   currency: 'USD',
-   minimumFractionDigits: 2,
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 2,
  });
 
  const AssetFormatter = new Intl.NumberFormat('en-US', {
-   minimumFractionDigits: 3,
+  // currency: 'USD',
+  style: 'decimal',
+  maximumFractionDigits: 2,
  });
 
 const TableRow = ({data}) => {
+  console.log(data.quantity)
   return (
     <div className='table-row-container'>
       <div className='row-item row-asset'>{data.asset}</div>

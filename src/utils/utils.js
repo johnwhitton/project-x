@@ -1,11 +1,4 @@
 import CowriMath from './math/CowriMath';
-/**
- * Converts token value to proper decimal places
- * @param {string} value - the value of token
- * @param {number} decimals - the decimals of token
- * @returns {number}
- */
-const convertValueToTokenDecimals = (value, decimals) => CowriMath.times(value, CowriMath.pow(10, decimals));
 
 /**
  * Converts token value to proper decimal places
@@ -13,7 +6,17 @@ const convertValueToTokenDecimals = (value, decimals) => CowriMath.times(value, 
  * @param {number} decimals - the decimals of token
  * @returns {number}
  */
-const convertValueFromTokenDecimals = (value, decimals) => CowriMath.dividedBy(value, CowriMath.pow(10, decimals));
+const convertValueToTokenDecimals = (value, decimals) => 
+  CowriMath.times(value, CowriMath.pow(10, decimals)).toString();
+
+/**
+ * Converts token value to proper decimal places
+ * @param {string} value - the value of token
+ * @param {number} decimals - the decimals of token
+ * @returns {number}
+ */
+const convertValueFromTokenDecimals = (value, decimals) => 
+  CowriMath.dividedBy(value, CowriMath.pow(10, decimals));
 
 /**
  * Gets ratio of token to cowri
@@ -22,6 +25,7 @@ const convertValueFromTokenDecimals = (value, decimals) => CowriMath.dividedBy(v
  * @param {string} cowriToSend - the amount of cowri to send
  * @returns {number}
  */
-const getTokenToCowriRatio = (balance, cowriBalance, cowriToSend)  => (balance / cowriBalance) *  cowriToSend;
+const getTokenToCowriRatio = (balance, cowriBalance, cowriToSend) => 
+  (balance / cowriBalance) *  cowriToSend;
 
 export { convertValueToTokenDecimals, convertValueFromTokenDecimals, getTokenToCowriRatio };
