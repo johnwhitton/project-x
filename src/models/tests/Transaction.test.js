@@ -7,40 +7,34 @@ import {assert} from 'chai';
 let senderCowriUser;
 let receiverCowriUser;
 
+it ('Test that creating a transaction throws an error if the balance isn\'t enough to cover the tx', () => {
+  initializeTestData();
+  let constructorFunction =
+  assert.throws(() => new Transaction(senderCowriUser, receiverCowriUser, 10000));
+});
+
 it ('Test isOverlapEnoughToCoverTX returns true if the overlap is enough to cover the balance', () => {
   initializeTestData();
-  var transactionProtocol = new Transaction(senderCowriUser, receiverCowriUser, 599);
-  assert.isTrue(transactionProtocol.isOverlapEnoughToCoverTX());
+  let transaction = new Transaction(senderCowriUser, receiverCowriUser, 599);
+  assert.isTrue(transaction.isOverlapEnoughToCoverTX());
 });
 
 it ('Test isOverlapEnoughToCoverTX returns true if the overlapped balance is equal to the amount to send', () => {
   initializeTestData();
-  var transactionProtocol = new Transaction(senderCowriUser, receiverCowriUser, 600);
-  assert.isTrue(transactionProtocol.isOverlapEnoughToCoverTX());
+  let transaction = new Transaction(senderCowriUser, receiverCowriUser, 600);
+  assert.isTrue(transaction.isOverlapEnoughToCoverTX());
 });
 
 it ('Test isOverlapEnoughToCoverTX returns false if the overlap is not enough to cover the balance', () => {
   initializeTestData();
-  var transactionProtocol = new Transaction(senderCowriUser, receiverCowriUser, 601);
-  assert.isFalse(transactionProtocol.isOverlapEnoughToCoverTX());
-});
-
-it ('Test that isTotalBalanceEnoughToCoverTx returns false if it is not enough to cover balance', () => {
-  initializeTestData();
-  var transactionProtocol = new Transaction(senderCowriUser, receiverCowriUser, 1001);
-  assert.isFalse(transactionProtocol.isTotalBalanceEnoughToCoverTX());
+  let transaction = new Transaction(senderCowriUser, receiverCowriUser, 601);
+  assert.isFalse(transaction.isOverlapEnoughToCoverTX());
 });
 
 it ('Test that isTotalBalanceEnoughToCoverTx returns true if it is exactly enough to cover balance', () => {
   initializeTestData();
-  var transactionProtocol = new Transaction(senderCowriUser, receiverCowriUser, 1000);
-  assert.isTrue(transactionProtocol.isTotalBalanceEnoughToCoverTX());
-});
-
-it ('Test that isTotalBalanceEnoughToCoverTx returns false if it is not enough to cover balance', () => {
-  initializeTestData();
-  var transactionProtocol = new Transaction(senderCowriUser, receiverCowriUser, 1001);
-  assert.isFalse(transactionProtocol.isTotalBalanceEnoughToCoverTX());
+  let transaction = new Transaction(senderCowriUser, receiverCowriUser, 1000);
+  assert.isTrue(transaction.isTotalBalanceEnoughToCoverTX());
 });
 
 it ('Test algorithm with integers: scenario 1 => [0,1,0,0,0,0,0]', () => {
@@ -115,6 +109,17 @@ it ('Test algorithm with decimals: scenario 12 => [0,0,1.2,0,0,0,10.8]', () => {
   shellAlgorithmDecimalTestScenario(12, [0,0,1.2,0,0,0,10.8]);
 });
 
+it ('Test that isVanilla has correct return value', () => {
+  initializeTestData();
+  let transaction = new Transaction(senderCowriUser, receiverCowriUser, 10);
+  assert.isTrue(transaction.isVanilla());
+});
+
+it ('Test that isIsmael has correct return value', () => {
+  initializeTestData();
+  let transaction = new Transaction(senderCowriUser, receiverCowriUser, 601);
+  assert.isTrue(transaction.isIsmael());
+});
 
 let shellAlgorithmTestScenario = (transactionAmount, expectedBalanceArray) => {
   let senderCowriShell = buildIntegerBalanceCowriShell();

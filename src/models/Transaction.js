@@ -9,6 +9,9 @@ export class Transaction {
     this.senderCowriUser = senderCowriUser;
     this.receiverCowriUser = receiverCowriUser;
     this.amount = amount;
+    if(!this.isTotalBalanceEnoughToCoverTX()) {
+      throw "Sender balance isn't enough to cover transaction amount";
+    }
   }
 
   isOverlapEnoughToCoverTX = () => {
@@ -19,6 +22,14 @@ export class Transaction {
   isTotalBalanceEnoughToCoverTX = () => {
     let senderBalance = this.senderCowriShell.getBalance();
     return senderBalance >= this.amount;
+  }
+
+  isVanilla = () => {
+    return this.isOverlapEnoughToCoverTX();
+  }
+
+  isIsmael = () => {
+    return !this.isOverlapEnoughToCoverTX();
   }
 
   getCowriShellThatCoversBalance = () => {
