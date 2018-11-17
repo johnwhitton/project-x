@@ -1,5 +1,5 @@
-import {CowriShell} from '../main/CowriShell';
-import CowriMath from '../main/CowriMath';
+import {CowriShell} from './CowriShell';
+import CowriMath from '../utils/math/CowriMath';
 
 export class Transaction {
 
@@ -19,16 +19,6 @@ export class Transaction {
   isTotalBalanceEnoughToCoverTX = () => {
     let senderBalance = this.senderCowriShell.getBalance();
     return senderBalance >= this.amount;
-  }
-
-  makeTransaction = () => {
-    let overlappedTokens = this.parseOverlappedTokens();
-    if(this.isOverlapEnoughToCoverTX()){
-      var overlappedTokensThatCoverBalance =
-        getCowriShellThatCoversBalance(this.overlappedTokenToValueMap);
-      return this.makeTransactionFromTokenMap(overlappedTokensThatCoverBalance);
-    }
-    return this.makeTransactionFromTokenMap(this.senderCowriShell);
   }
 
   getCowriShellThatCoversBalance = () => {

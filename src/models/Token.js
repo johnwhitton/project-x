@@ -1,4 +1,4 @@
-import {convertValueToTokenDecimals, convertValueFromTokenDecimals} from './utils';
+import {convertValueToTokenDecimals, convertValueFromTokenDecimals} from '../utils/utils';
 export class Token {
 
   constructor(tokenName, tokenAddress, balance = +0, decimals = +18){

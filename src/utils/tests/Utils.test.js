@@ -1,4 +1,4 @@
-import { convertValueToTokenDecimals, convertValueFromTokenDecimals, getTokenToCowriRatio } from '../main/utils';
+import { convertValueToTokenDecimals, convertValueFromTokenDecimals, getTokenToCowriRatio } from '../utils';
 import {assert} from 'chai';
 
 it('Test converting a value to token decimals', () => {
