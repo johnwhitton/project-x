@@ -61,4 +61,45 @@ export class Transaction {
     }
   }
 
+  //TODO: TEST THIS
+  getCowriShellThatCoversBalanceIfThereIsNoOverlap = (epsilon = [.01, .025, .05]) => {
+    epsilon = epsilon.filter(eps => this.isTotalBalanceEnoughToCoverTX(eps));
+    if(epsilon.length === 0) {
+      throw "Every epsilon puts the cost over the balance";
+    }
+
+    let senderTokens = this.senderCowriShell.getSortedTokenArray();
+    let rateQueryBatches = [];
+    for (let eps = 0; eps > epsilon.length; eps++) {
+      let returnedBalances = JSON.parse(JSON.stringify(senderTokens));//To get a deep copy in memory
+      for(let i = 0; i < returnedBalances.length; i++) {
+        returnedBalances[i].balance = 0;
+      }
+      for(let k = 0; k < senderTokens.length; k++){
+        if(senderTokens[k].balance >= CowriMath.times(this.amount, CowriMath.plus(1, epsilon[eps]))){
+          returnedBalances[k].balance = this.amount;
+          rateQueryBatches.push(new LiquidityPoolRateQueryBatch(new CowriShell(returnedBalances), this.receiverCowriShell));
+        }
+      }
+    }
+
+    let sum = 0;
+    for(let i = senderTokens.length - 1; i > 0; i-- ){
+      returnedBalances[i].balance = CowriMath.times(senderTokens[i].balance, CowriMath.minus(1, epsilon[eps]));
+      sum = CowriMath.plus(sum, returnedBalances[i].balance);
+      if (sum === this.amount){
+        rateQueryBatches.push(new LiquidityPoolRateQueryBatch(new CowriShell(returnedBalances), this.receiverCowriShell));
+        continue;
+      }
+      for(var j = 0; j < i; j++){
+        let remainder = this.amount - sum;
+        if(senderTokens[j].balance >= CowriMath.times(remainder, CowriMath.plus(1, epsilon[eps]))){
+          returnedBalances[j].balance = CowriMath.minus(remainder);
+          rateQueryBatches.push(new LiquidityPoolRateQueryBatch(new CowriShell(returnedBalances), this.receiverCowriShell));
+          break;
+        }
+      }
+    }
+  }
+
 }
