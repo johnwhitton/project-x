@@ -37,6 +37,24 @@ it ('Test that isTotalBalanceEnoughToCoverTx returns true if it is exactly enoug
   assert.isTrue(transaction.isTotalBalanceEnoughToCoverTX());
 });
 
+it ('Test that isTotalBalanceEnoughToCoverTx returns true if passed an epsilon and the balance minus epsilon is equal to the amount ', () => {
+  initializeTestData();
+  let transaction = new Transaction(senderCowriUser, receiverCowriUser, 990);
+  assert.isTrue(transaction.isTotalBalanceEnoughToCoverTX(.01));
+});
+
+it ('Test that isTotalBalanceEnoughToCoverTx returns false if passed an epsilon and the balance minus epsilon is less than the amount ', () => {
+  initializeTestData();
+  let transaction = new Transaction(senderCowriUser, receiverCowriUser, 991);
+  assert.isFalse(transaction.isTotalBalanceEnoughToCoverTX(.01));
+});
+
+it ('Test that isTotalBalanceEnoughToCoverTx returns true if passed an epsilon and the balance minus epsilon is greater than the amount ', () => {
+  initializeTestData();
+  let transaction = new Transaction(senderCowriUser, receiverCowriUser, 989);
+  assert.isTrue(transaction.isTotalBalanceEnoughToCoverTX(.01));
+});
+
 it ('Test algorithm with integers: scenario 1 => [0,1,0,0,0,0,0]', () => {
   shellAlgorithmTestScenario(1, [0,1,0,0,0,0,0]);
 });

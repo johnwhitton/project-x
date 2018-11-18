@@ -19,9 +19,9 @@ export class Transaction {
     return overlappedCowriShell.getBalance() >= this.amount;
   }
 
-  isTotalBalanceEnoughToCoverTX = () => {
+  isTotalBalanceEnoughToCoverTX = (epsilon = 0) => {
     let senderBalance = this.senderCowriShell.getBalance();
-    return senderBalance >= this.amount;
+    return CowriMath.times(senderBalance,  (CowriMath.minus(1, epsilon))) >= this.amount;
   }
 
   isVanilla = () => {
