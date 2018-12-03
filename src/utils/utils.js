@@ -1,4 +1,5 @@
 import CowriMath from './math/CowriMath';
+import {assetDataUtils, generatePseudoRandomSalt} from '0x.js'
 
 /**
  * Converts token value to proper decimal places
@@ -6,8 +7,8 @@ import CowriMath from './math/CowriMath';
  * @param {number} decimals - the decimals of token
  * @returns {number}
  */
-const convertValueToTokenDecimals = (value, decimals) => 
-  CowriMath.times(value, CowriMath.pow(10, decimals)).toString();
+const convertValueToTokenDecimals = (value, decimals) =>
+  CowriMath.times(value, CowriMath.pow(10, decimals));
 
 /**
  * Converts token value to proper decimal places
@@ -15,7 +16,7 @@ const convertValueToTokenDecimals = (value, decimals) =>
  * @param {number} decimals - the decimals of token
  * @returns {number}
  */
-const convertValueFromTokenDecimals = (value, decimals) => 
+const convertValueFromTokenDecimals = (value, decimals) =>
   CowriMath.dividedBy(value, CowriMath.pow(10, decimals));
 
 /**
@@ -25,7 +26,14 @@ const convertValueFromTokenDecimals = (value, decimals) =>
  * @param {string} cowriToSend - the amount of cowri to send
  * @returns {number}
  */
-const getTokenToCowriRatio = (balance, cowriBalance, cowriToSend) => 
+const getTokenToCowriRatio = (balance, cowriBalance, cowriToSend) =>
   (balance / cowriBalance) *  cowriToSend;
 
-export { convertValueToTokenDecimals, convertValueFromTokenDecimals, getTokenToCowriRatio };
+const generateRandom256Salt = () => {
+  return generatePseudoRandomSalt();
+}
+
+const encodeERC20AssetData = (erc20TokenAddress) => {
+  return assetDataUtils.encodeERC20AssetData(erc20TokenAddress);
+}
+export { convertValueToTokenDecimals, convertValueFromTokenDecimals, getTokenToCowriRatio, generateRandom256Salt, encodeERC20AssetData};

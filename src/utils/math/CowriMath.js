@@ -26,5 +26,8 @@ export default class CowriMath {
     let bigNum1 = new BigNumber(base);
     return +bigNum1.exponentiatedBy(exponent);
   }
+
 }
+
+export const ZERO = new BigNumber(0);
 
