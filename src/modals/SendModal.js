@@ -8,7 +8,7 @@ class SendModal extends Component {
   handleClose = () => this.setState({isShowingModal: false})
   render() {
     return (
-     <div className='send-modal-container'>
+     <div className='send-modal-container modal-dialog'>
       <form className='send-modal-form' action=''>
         <div className='send-modal-form-container'>
           <div className='send-modal-input address-input'>

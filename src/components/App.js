@@ -32,11 +32,12 @@ class App extends Component<State> {
     }
   }
 
-  toggleSendModal = (visible: boolean) => {
+  _toggleSendModal = (visible: boolean) => {
     this.setState(({isSendModalVisible}) => ({isSendModalVisible: visible}));
   }
 
-  toggleReceiveModal = (visible: boolean) => {
+  _toggleReceiveModal = (visible: boolean) => {
+    console.log(visible)
     this.setState(({isReceiveModalVisible}) => ({isReceiveModalVisible: visible}));
   }
 
@@ -45,8 +46,14 @@ class App extends Component<State> {
     return (
       <Fragment>
         <div className='cowri-root'>
-          <BaseHeader connectionStatus={connected}/>
-          <BaseContainer connectionStatus={connected} account={account} web3={web3}/>
+          <BaseHeader connectionStatus={connected} />
+          <BaseContainer 
+            account={account} 
+            connectionStatus={connected} 
+            toggleReceiveModal={this._toggleReceiveModal}
+            toggleSendModal={this._toggleSendModal}
+            web3={web3}
+          />
         </div>
         { isSendModalVisible && (<SendModal/>) }
         { isReceiveModalVisible && (<ReceiveModal/>) }

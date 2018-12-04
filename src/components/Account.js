@@ -16,13 +16,16 @@ class Account extends Component {
 
   render() {
     const view = this.state.view;
-    const {account, web3} = this.props;
+    const {account, web3, toggleReceiveModal, toggleSendModal} = this.props;
     return (
       <div className='account-container'>
         <div className='account-top'>
           <div className='action-container'>
             <Metamask account={account}/>
-            <ButtonGroup/>
+            <ButtonGroup 
+              toggleReceiveModal={toggleReceiveModal} 
+              toggleSendModal={toggleSendModal}
+            />
           </div>
         </div>
         <div className='account-bottom'>

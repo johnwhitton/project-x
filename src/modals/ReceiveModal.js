@@ -9,7 +9,7 @@ class ReceiveModal extends Component {
   render() {
     const myAddress = '0x0A7E5D81c57fDFC97270135633E77F505170807C';
     return (
-     <div className='receive-modal-container'>
+     <div className='receive-modal-container modal-dialog'>
         <div className='receive-modal-header'>
           <span>
             <i className='fas fa-arrow-circle-down btn-icon'></i>
