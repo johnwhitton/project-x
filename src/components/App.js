@@ -8,7 +8,9 @@ import web3 from '../web3';
 class App extends Component {
   state = {
     account: '',
-    connected: 'false',
+    connected: false,
+    isSendModalVisible: false,
+    isReceiveModalVisible: false,
   }
 
   async componentDidMount() {
@@ -19,22 +21,28 @@ class App extends Component {
         connected: true,
       });
     } else {
-      this.setState({connected: false});
+      this.setState({connected: true});
     }
   }
 
+  toggleSendModal = (visible) => {
+    this.setState(({isSendModalVisible}) => ({isSendModalVisible: visible}));
+  }
+
+  toggleReceiveModal = (visible) => {
+    this.setState(({isReceiveModalVisible}) => ({isReceiveModalVisible: visible}));
+  }
+
   render() { 
-    const {connected, account} = this.state;
-    const showSendModal = false;
-    const showReceiveModal = false;
+    const {account, connected, isReceiveModalVisible, isSendModalVisible} = this.state;
     return (
       <Fragment>
         <div className='cowri-root'>
           <BaseHeader connectionStatus={connected}/>
           <BaseContainer connectionStatus={connected} account={account} web3={web3}/>
         </div>
-        { showSendModal && (<SendModal/>) }
-        { showReceiveModal && (<ReceiveModal/>) }
+        { isSendModalVisible && (<SendModal/>) }
+        { isReceiveModalVisible && (<ReceiveModal/>) }
       </Fragment>
     );
   }
