@@ -5,13 +5,20 @@ import ReceiveModal from '../modals/ReceiveModal';
 import SendModal from '../modals/SendModal';
 import web3 from '../web3';
 
-class App extends Component {
+type State = {
+  account: string,
+  connected: boolean,
+  isSendModalVisible: boolean,
+  isReceiveModalVisible: boolean,
+};
+
+class App extends Component<State> {
   state = {
     account: '',
     connected: false,
     isSendModalVisible: false,
     isReceiveModalVisible: false,
-  }
+  };
 
   async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
@@ -25,11 +32,11 @@ class App extends Component {
     }
   }
 
-  toggleSendModal = (visible) => {
+  toggleSendModal = (visible: boolean) => {
     this.setState(({isSendModalVisible}) => ({isSendModalVisible: visible}));
   }
 
-  toggleReceiveModal = (visible) => {
+  toggleReceiveModal = (visible: boolean) => {
     this.setState(({isReceiveModalVisible}) => ({isReceiveModalVisible: visible}));
   }
 
