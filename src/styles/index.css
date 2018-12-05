@@ -601,6 +601,13 @@ body {
   transform: rotate(45deg);
 }
 
+.error-connect-container {
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   /*.base-container {background-color: red;}*/

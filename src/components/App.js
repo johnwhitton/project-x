@@ -22,13 +22,13 @@ class App extends Component<State> {
 
   async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
-    if (accounts.length > 0 ) {
+    if (accounts.length > 0) {
       this.setState({
         account: accounts[0],
         connected: true,
       });
     } else {
-      this.setState({connected: true});
+      this.setState({connected: false});
     }
   }
 
