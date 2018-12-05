@@ -4,6 +4,18 @@ import React, {Component, Fragment} from 'react';
 import ReceiveModal from '../modals/ReceiveModal';
 import SendModal from '../modals/SendModal';
 import web3 from '../web3';
+import {ZeroExMetamaskTransaction} from '../models/tests/ZeroExMetamaskTransaction'
+import {
+    assetDataUtils,
+    BigNumber,
+    ContractWrappers,
+    generatePseudoRandomSalt,
+    Order,
+    orderHashUtils,
+    signatureUtils,
+} from '0x.js';
+import { ZeroEx } from '0x.js';
+import Web3 from '../web3';
 
 type State = {
   account: string,
@@ -30,6 +42,15 @@ class App extends Component<State> {
     } else {
       this.setState({connected: true});
     }
+
+    const testZeroExMetamaskTransaction = new ZeroExMetamaskTransaction();
+    const order = testZeroExMetamaskTransaction.generateOrder();
+    // Generate the order hash and sign it
+    const orderHashHex = orderHashUtils.getOrderHashHex(order);
+    const signature = await signatureUtils.ecSignHashAsync(window.web3.currentProvider, orderHashHex, testZeroExMetamaskTransaction.senderCowriUser.address.toLowerCase());
+    const signedOrder = { ...order, signature };
+    console.log(signedOrder);
+    await ZeroEx.validateFillOrderThrowIfInvalidAsync(signedOrder, testZeroExMetamaskTransaction.receiverToken.balance, testZeroExMetamaskTransaction.receiverCowriUser);
   }
 
   _toggleSendModal = (visible: boolean) => {
@@ -41,15 +62,15 @@ class App extends Component<State> {
     this.setState(({isReceiveModalVisible}) => ({isReceiveModalVisible: visible}));
   }
 
-  render() { 
+  render() {
     const {account, connected, isReceiveModalVisible, isSendModalVisible} = this.state;
     return (
       <Fragment>
         <div className='cowri-root'>
           <BaseHeader connectionStatus={connected} />
-          <BaseContainer 
-            account={account} 
-            connectionStatus={connected} 
+          <BaseContainer
+            account={account}
+            connectionStatus={connected}
             toggleReceiveModal={this._toggleReceiveModal}
             toggleSendModal={this._toggleSendModal}
             web3={web3}
