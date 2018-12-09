@@ -771,7 +771,7 @@ async-eventemitter@^0.2.2:
   dependencies:
     async "^2.4.0"
 
-"async-eventemitter@github:ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c":
+async-eventemitter@ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c:
   version "0.2.3"
   resolved "https://codeload.github.com/ahultgren/async-eventemitter/tar.gz/fa06e39e56786ba541c180061dbf2c0a5bbf951c"
   dependencies:
@@ -11200,7 +11200,7 @@ web3-provider-engine@14.0.6:
     xhr "^2.2.0"
     xtend "^4.0.1"
 
-web3-provider-engine@14.1.0:
+web3-provider-engine@14.1.0, web3-provider-engine@^14.1.0:
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/web3-provider-engine/-/web3-provider-engine-14.1.0.tgz#91590020f8b8c1b65846321310cbfdb039090fc6"
   integrity sha512-vGZtqhSUzGTiMGhJXNnB/aRDlrPZLhLnBZ2NPArkZtr8XSrwg9m08tw4+PuWg5za0TJuoE/vuPQc501HddZZWw==
