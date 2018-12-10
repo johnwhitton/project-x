@@ -4,6 +4,7 @@ import {ZeroExExchangeAddress} from '../Constants';
 export class ZeroExExchangeContract extends ExchangeContract {
 
   constructor() {
+    super();
     super.ExchangeAddress = ZeroExExchangeAddress;
   }
 

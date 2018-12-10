@@ -16,8 +16,8 @@ export class Web3ProviderEngine extends ProviderEngine {
     this.web3ProviderEngine.start();
   }
 
-  send = () => {
-    this.web3ProviderEngine.send();
+  sendAsync = async () => {
+    await this.web3ProviderEngine.sendAsync();
   }
 
 }

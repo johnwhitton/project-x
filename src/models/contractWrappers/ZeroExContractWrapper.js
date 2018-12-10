@@ -5,7 +5,7 @@ import {ProviderEngine} from '../providerEngine/ProviderEngine';
 export class ZeroExContractWrapper extends ContractWrappers {
   constructor(providerEngine) {
     super();
-    this.zeroExContractWrapper = ZeroExContractWrappers(providerEngine, {networkId: 50});
+    this.zeroExContractWrapper = new ZeroExContractWrappers(providerEngine, {networkId: 50});
   }
 
   setUnlimitedProxyAllowanceAsync = async (tokenAddress, userAddress) => {
