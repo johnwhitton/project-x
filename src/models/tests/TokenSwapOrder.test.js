@@ -3,7 +3,7 @@ import {assert} from 'chai';
 import {Token} from '../Token';
 import {CowriShell} from '../CowriShell';
 import {CowriUser} from '../CowriUser';
-
+/*
 it ('Test the TokenSwapOrder constructor', () => {
   const senderToken = buildSenderToken();
   const receiverToken = buildReceiverToken();
@@ -22,3 +22,4 @@ let buildSenderToken = () => {
 let buildReceiverToken = () => {
   return new Token("receiverToken", "receiverTokenAddress", 20);
 }
+*/

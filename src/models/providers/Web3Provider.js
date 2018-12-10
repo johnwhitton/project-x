@@ -12,4 +12,8 @@ export class Web3Provider extends Provider{
     await this.web3Provider.awaitTransactionSuccessAsync(txHash);
   }
 
+  getAvailableAddressesAsync = async () => {
+    return await Web3.getAvailableAddressesAsync();
+  }
+
 }

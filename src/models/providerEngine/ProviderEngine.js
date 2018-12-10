@@ -4,13 +4,14 @@ export class ProviderEngine {
     if(this === ProviderEngine) {
       throw new TypeError('Abstract class ProviderEngine cannot be instantiated directly');
     }
-    if(!this.addProvider) {
-      throw new Error('addProvider must be implemented in concrete subclass');
-    }
-    if(!this.start) {
-      throw new Error('start must be implemented in concrete subclass');
-    }
   }
 
+  addProvider = () => {
+    throw new Error('cannot call methods from abstract class ProviderEngine');
+  }
+
+  start = () => {
+    throw new Error('cannot call methods from abstract class ProviderEngine');
+  }
 }
 

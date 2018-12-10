@@ -2,19 +2,19 @@ import {CowriShell} from '../CowriShell';
 import {Token} from '../Token';
 import {assert} from 'chai';
 
-it ('Test the CowriShell constructor', () => {
+it ('Test the CowriShell constructor', async () => {
   let cowriShell = buildCowriShellA();
   let expectedTotal = 600;
   assert.equal(expectedTotal, cowriShell.getBalance());
 });
 
-it ('Test returning the addresses of the tokens in the CowriShell', () => {
+it ('Test returning the addresses of the tokens in the CowriShell', async () => {
   let cowriShell = buildCowriShellA();
   let expectedAddresses = ['BAddress', 'AAddress', 'CAddress'];
   assert.deepEqual(expectedAddresses, cowriShell.getTokenAddresses());
 });
 
-it ('Test the functionality behind overlapping tokens', () => {
+it ('Test the functionality behind overlapping tokens', async () => {
   let cowriShellA = buildCowriShellA();
   let cowriShellB = buildCowriShellB();
   let expectedOverlap = buildExpectedShellOverlap();
@@ -22,7 +22,7 @@ it ('Test the functionality behind overlapping tokens', () => {
   assert.deepEqual(expectedOverlap.getTokenAddresses(), actualOverlap.getTokenAddresses());
 });
 
-it ('Test getting the address to value map', () => {
+it ('Test getting the address to value map', async () => {
   let cowriShell = buildCowriShellA();
   let expectedMap = {
     "AAddress": 100,
@@ -32,7 +32,7 @@ it ('Test getting the address to value map', () => {
   assert.deepEqual(expectedMap, cowriShell.getAddressToValueMap());
 });
 
-it ('Test getting the sorted token array', () => {
+it ('Test getting the sorted token array', async () => {
   let cowriShell = buildCowriShellA();
   let tokenA = new Token('Stablecoin A', 'AAddress', 100);
   let tokenB = new Token('Stablecoin B', 'BAddress', 200);

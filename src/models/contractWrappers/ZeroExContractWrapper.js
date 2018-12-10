@@ -4,6 +4,7 @@ import {ProviderEngine} from '../providerEngine/ProviderEngine';
 
 export class ZeroExContractWrapper extends ContractWrappers {
   constructor(providerEngine) {
+    super();
     this.zeroExContractWrapper = ZeroExContractWrappers(providerEngine, {networkId: 50});
   }
 
@@ -14,5 +15,10 @@ export class ZeroExContractWrapper extends ContractWrappers {
 
   validateFillOrderThrowIfInvalidAsync = async (signedOrder, takerAssetAmount, takerAddress) => {
     await this.zeroExContractWrapper.exchange.validateFillOrderThrowIfInvalidAsync(signedOrder, takerAssetAmount, takerAddress);
+  }
+
+  depositEtherAsync = async (tokenAddress, assetAmount, userAddress) => {
+    const depositTxHash = await this.zeroExContractWrapper.etherToken.depositAsync(tokenAddress, assetAmount, userAddress);
+    return depositTxHash;
   }
 }

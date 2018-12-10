@@ -3,11 +3,13 @@ export class ContractWrappers {
     if(this === ContractWrappers) {
       throw new TypeError('Cannot instantiate abstract class ContractWrappers');
     }
-    if(!this.setUnlimitedProxyAllowanceAsync) {
-      throw new Error('setUnlimitedProxyAllwanceAsyc must be declared in sub class');
-    }
-    if(!this.validateFillOrderThrowIfInvalidAsync) {
-      throw new Error('validateFillOrderThrowIfInvalidAsync must be declared in sub class');
-    }
+  }
+
+  setUnlimitedProxyAllowanceAsync = async () => {
+    throw new Error('setUnlimitedProxyAllowanceAsync must be called in sub class');
+  }
+
+  validateFillOrderThrowIfInvalidAsync = async => {
+    throw new Error('validateFillOrderThrowIfInvalidAsync must be called in sub class');
   }
 }
