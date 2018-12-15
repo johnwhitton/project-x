@@ -19,10 +19,10 @@ it ('Test the end-to-end process of signing a transaction', async () => {
   // Instantiate ContractWrappers with the provider
   const contractWrappers = new ZeroExContractWrapper(providerEngine.web3ProviderEngine);
   const web3Wrapper = new Web3Provider(providerEngine.web3ProviderEngine);
-  console.log(await web3Wrapper.getAvailableAddressesAsync());
-  const [makerAddress, takerAddress] = web3Wrapper.getAvailableAddressesAsync();
-
+  const makerAddress = '0x5409ed021d9299bf6814279a61411a7e866a631';
+  const takerAddress = '0x6ecbe1db9ef729cbe972c83fb886247691fb6beb';
   const contractAddresses = ZeroExContractAddresses.getContractAddressesForNetworkOrThrow();
+  console.log('started?');
   const zrxTokenAddress = contractAddresses.zrxToken;
   const etherTokenAddress = contractAddresses.etherToken;
   const DECIMALS = 18;

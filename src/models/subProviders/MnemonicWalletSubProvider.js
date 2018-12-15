@@ -5,7 +5,7 @@ export class MnemonicWalletSubProvider extends SubProvider{
 
     constructor() {
         super();
-        const BASE_DERIVATION_PATH = `44'/60'/0'/0`;
+        const BASE_DERIVATION_PATH = "44'/60'/0'/0";
         const MNEMONIC = 'concert load couple harbor equip island argue ramp clarify fence smart topic';
 
         this.mnemonicWalletSubProvider = new MnemonicWalletSubprovider({
