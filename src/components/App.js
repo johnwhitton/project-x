@@ -1,6 +1,6 @@
 import BaseContainer from './BaseContainer';
 import BaseHeader from './BaseHeader';
-import React, {Component, Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import ReceiveModal from '../modals/ReceiveModal';
 import SendModal from '../modals/SendModal';
 import web3 from '../web3';
@@ -12,7 +12,7 @@ type State = {
   isReceiveModalVisible: boolean,
 };
 
-class App extends Component<State> {
+class App extends Component {
   state = {
     account: '',
     connected: false,
@@ -28,35 +28,34 @@ class App extends Component<State> {
         connected: true,
       });
     } else {
-      this.setState({connected: false});
+      this.setState({ connected: false });
     }
   }
 
-  _toggleSendModal = (visible: boolean) => {
-    this.setState(({isSendModalVisible}) => ({isSendModalVisible: visible}));
+  _toggleSendModal = visible => {
+    this.setState(({ isSendModalVisible }) => ({ isSendModalVisible: visible }));
   }
 
-  _toggleReceiveModal = (visible: boolean) => {
-    console.log(visible)
-    this.setState(({isReceiveModalVisible}) => ({isReceiveModalVisible: visible}));
+  _toggleReceiveModal = visible => {
+    this.setState(({ isReceiveModalVisible }) => ({ isReceiveModalVisible: visible }));
   }
 
-  render() { 
-    const {account, connected, isReceiveModalVisible, isSendModalVisible} = this.state;
+  render() {
+    const { account, connected, isReceiveModalVisible, isSendModalVisible } = this.state;
     return (
       <Fragment>
         <div className='cowri-root'>
           <BaseHeader connectionStatus={connected} />
-          <BaseContainer 
-            account={account} 
-            connectionStatus={connected} 
+          <BaseContainer
+            account={account}
+            connectionStatus={connected}
             toggleReceiveModal={this._toggleReceiveModal}
             toggleSendModal={this._toggleSendModal}
             web3={web3}
           />
         </div>
-        { isSendModalVisible && (<SendModal/>) }
-        { isReceiveModalVisible && (<ReceiveModal/>) }
+        {isSendModalVisible && (<SendModal />)}
+        {isReceiveModalVisible && (<ReceiveModal />)}
       </Fragment>
     );
   }
