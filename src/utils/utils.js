@@ -33,4 +33,8 @@ const generateRandom256Salt = () => {
   return generatePseudoRandomSalt();
 }
 
-export { convertValueToTokenDecimals, convertValueFromTokenDecimals, getTokenToCowriRatio, generateRandom256Salt};
+const getFutureExpiration = () => {
+  return CowriMath.bigNumber(Date.now() + 600000).ceil();
+}
+
+export { convertValueToTokenDecimals, convertValueFromTokenDecimals, getTokenToCowriRatio, generateRandom256Salt, getFutureExpiration};

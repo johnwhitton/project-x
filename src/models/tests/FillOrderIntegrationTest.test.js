@@ -1,18 +1,14 @@
-import {
-  BigNumber,
-  Order,
-  orderHashUtils,
-  signatureUtils
-} from '0x.js';
-import { Web3Wrapper } from '@0x/web3-wrapper';
 import { RPCSubprovider } from '../subProviders/RPCSubprovider';
 import { encodeERC20AssetData } from '../../utils/AssetDataUtils';
 import { NULL_ADDRESS, DECIMALS, GANACHE_NETWORK_ID, RPC_URL } from '../Constants';
 import { ZERO } from '../../utils/math/CowriMath';
-import { generateRandom256Salt } from '../../utils/utils';
+import { generateRandom256Salt, getFutureExpiration} from '../../utils/utils';
 import { Web3ProviderEngine } from '../providerEngine/Web3ProviderEngine';
 import { ZeroExERC20ContractWrapper } from '../contractWrappers/ZeroExERC20ContractWrapper';
 import { ZeroExContractAddresses } from '../contractAddresses/ZeroExContractAddresses';
+import { Web3Provider } from '../providers/Web3Provider';
+import { getOrderHashHex } from '../../utils/OrderHashUtils';
+import { ecSignHashAsync } from '../../utils/SignatureUtils';
 
 it ('Test the end-to-end process of signing a transaction', async () => {
 
@@ -21,7 +17,7 @@ it ('Test the end-to-end process of signing a transaction', async () => {
   providerEngine.start();
   const contractWrappers = new ZeroExERC20ContractWrapper(providerEngine.getEngine(), { networkId: GANACHE_NETWORK_ID });
 
-  const web3Wrapper = new Web3Wrapper(providerEngine.getEngine());
+  const web3Wrapper = new Web3Provider(providerEngine.getEngine());
   const [maker, taker] = await web3Wrapper.getAvailableAddressesAsync();
 
   const zeroExContractAddresses = new ZeroExContractAddresses();
@@ -33,9 +29,9 @@ it ('Test the end-to-end process of signing a transaction', async () => {
   const takerAssetData = encodeERC20AssetData(etherTokenAddress);
 
   // the amount the maker is selling of maker asset
-  const makerAssetAmount = Web3Wrapper.toBaseUnitAmount(new BigNumber(5), DECIMALS);
+  const makerAssetAmount = web3Wrapper.toBaseUnitAmount(5, DECIMALS);
   // the amount the maker wants of taker asset
-  const takerAssetAmount = Web3Wrapper.toBaseUnitAmount(new BigNumber(0.1), DECIMALS);
+  const takerAssetAmount = web3Wrapper.toBaseUnitAmount(0.1, DECIMALS);
   const makerZRXApprovalTxHash = await contractWrappers.setUnlimitedProxyAllowanceAsync(
         zrxTokenAddress,
         maker
@@ -57,10 +53,10 @@ it ('Test the end-to-end process of signing a transaction', async () => {
 
   await web3Wrapper.awaitTransactionSuccessAsync(takerWETHDepositTxHash);
 
-  const randomExpiration = new BigNumber(Date.now() + 600000).ceil();
+  const randomExpiration = getFutureExpiration();
   const exchangeAddress = contractAddresses.exchange;
 
-  const order: Order = {
+  const order = {
         exchangeAddress,
         makerAddress: maker,
         takerAddress: NULL_ADDRESS,
@@ -76,9 +72,9 @@ it ('Test the end-to-end process of signing a transaction', async () => {
         takerFee: ZERO,
   };
 
-  const orderHashHex = orderHashUtils.getOrderHashHex(order);
+  const orderHashHex = getOrderHashHex(order);
 
-  const signature = await signatureUtils.ecSignHashAsync(providerEngine.getEngine(), orderHashHex, maker);
+  const signature = await ecSignHashAsync(providerEngine.getEngine(), orderHashHex, maker);
   const signedOrder = { ...order, signature  };
 
   await contractWrappers.validateFillOrderThrowIfInvalidAsync(signedOrder, takerAssetAmount, taker);
