@@ -1,85 +1,87 @@
-import {assert} from 'chai';
-import {RPCSubProvider} from '../subProviders/RPCSubProvider';
-import {MnemonicWalletSubProvider} from '../subProviders/MnemonicWalletSubProvider';
-import {Web3ProviderEngine} from '../providerEngine/Web3ProviderEngine';
-import {ZeroExContractWrapper} from '../contractWrappers/ZeroExContractWrapper';
-import {Web3Provider} from '../providers/Web3Provider.js';
-import {ZeroExContractAddresses} from '../contractAddresses/ZeroExContractAddresses';
-import {encodeERC20AssetData} from '../../utils/AssetDataUtils';
-import {getOrderHashHex} from '../../utils/OrderHashUtils';
-import {convertValueToTokenDecimals, generateRandom256Salt} from '../../utils/utils';
-import {ecSignHashAsync} from '../../utils/SignatureUtils';
+import {
+  assetDataUtils,
+  BigNumber,
+  ContractWrappers,
+  generatePseudoRandomSalt,
+  Order,
+  orderHashUtils,
+  signatureUtils
+} from '0x.js';
+import { Web3Wrapper } from '@0x/web3-wrapper';
+import { getContractAddressesForNetworkOrThrow } from '@0x/contract-addresses';
+import {RPCSubprovider, Web3ProviderEngine } from '0x.js';
 
 it ('Test the end-to-end process of signing a transaction', async () => {
+  const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
+  const ZERO = new BigNumber(0);
   const providerEngine = new Web3ProviderEngine();
-  providerEngine.addProvider(new RPCSubProvider('http://127.0.0.1:8545'));
-  providerEngine.addProvider(new MnemonicWalletSubProvider());
+  providerEngine.addProvider(new RPCSubprovider('http://localhost:8545'));
   providerEngine.start();
+  const contractWrappers = new ContractWrappers(providerEngine, { networkId: 50 });
 
-  // Instantiate ContractWrappers with the provider
-  const contractWrappers = new ZeroExContractWrapper(providerEngine.web3ProviderEngine);
-  const web3Wrapper = new Web3Provider(providerEngine.web3ProviderEngine);
-  const makerAddress = '0x5409ed021d9299bf6814279a61411a7e866a631';
-  const takerAddress = '0x6ecbe1db9ef729cbe972c83fb886247691fb6beb';
-  const contractAddresses = ZeroExContractAddresses.getContractAddressesForNetworkOrThrow();
-  console.log('started?');
+  const web3Wrapper = new Web3Wrapper(providerEngine);
+  const [maker, taker] = await web3Wrapper.getAvailableAddressesAsync();
+
+  //const makerAddress = '0x5409ed021d9299bf6814279a61411a7e866a631';
+  //const takerAddress = '0x6ecbe1db9ef729cbe972c83fb886247691fb6beb';
+  const contractAddresses = getContractAddressesForNetworkOrThrow(50);
   const zrxTokenAddress = contractAddresses.zrxToken;
   const etherTokenAddress = contractAddresses.etherToken;
   const DECIMALS = 18;
 
-  const makerAssetData = encodeERC20AssetData(zrxTokenAddress);
-  const takerAssetData = encodeERC20AssetData(etherTokenAddress);
+  const makerAssetData = assetDataUtils.encodeERC20AssetData(zrxTokenAddress);
+  const takerAssetData = assetDataUtils.encodeERC20AssetData(etherTokenAddress);
 
   // the amount the maker is selling of maker asset
-  const makerAssetAmount = convertValueToTokenDecimals(5, DECIMALS);
+  const makerAssetAmount = Web3Wrapper.toBaseUnitAmount(new BigNumber(5), DECIMALS);
   // the amount the maker wants of taker asset
-  const takerAssetAmount = convertValueToTokenDecimals(0.1, DECIMALS);
-
-  const makerZRXApprovalTxHash = ZeroExContractWrapper.setUnlimitedProxyAllowanceAsync(
+  const takerAssetAmount = Web3Wrapper.toBaseUnitAmount(new BigNumber(0.1), DECIMALS);
+  const makerZRXApprovalTxHash = await contractWrappers.erc20Token.setUnlimitedProxyAllowanceAsync(
         zrxTokenAddress,
-        makerAddress
-  );
-  web3Wrapper.awaitTransactionSuccessAsync(makerZRXApprovalTxHash);
+        maker,
 
-  const takerWETHApprovalTxHash = ZeroExContractWrapper.setUnlimitedProxyAllowanceAsync(
+  );
+  await web3Wrapper.awaitTransactionSuccessAsync(makerZRXApprovalTxHash);
+  const takerWETHApprovalTxHash = await contractWrappers.erc20Token.setUnlimitedProxyAllowanceAsync(
         etherTokenAddress,
-        takerAddress
-  );
-  web3Wrapper.awaitTransactionSuccessAsync(takerWETHApprovalTxHash);
+        taker,
 
-  const takerWETHDepositTxHash = contractWrappers.etherToken.depositAsync(
+  );
+  await web3Wrapper.awaitTransactionSuccessAsync(takerWETHApprovalTxHash);
+
+  const takerWETHDepositTxHash = await contractWrappers.etherToken.depositAsync(
         etherTokenAddress,
         takerAssetAmount,
-        takerAddress
+        taker,
+
   );
+  await web3Wrapper.awaitTransactionSuccessAsync(takerWETHDepositTxHash);
 
-  web3Wrapper.awaitTransactionSuccessAsync(takerWETHDepositTxHash);
-
-  const ExpirationTimeInSeconds = +Date.now() + 3600000;
-  const randomExpiration = ExpirationTimeInSeconds;
+  const randomExpiration = new BigNumber(Date.now() + 600000).ceil();
   const exchangeAddress = contractAddresses.exchange;
 
-  const order = {
+  const order: Order = {
         exchangeAddress,
-        makerAddress: makerAddress,
+        makerAddress: maker,
         takerAddress: NULL_ADDRESS,
         senderAddress: NULL_ADDRESS,
         feeRecipientAddress: NULL_ADDRESS,
         expirationTimeSeconds: randomExpiration,
-        salt: generateRandom256Salt(),
+        salt: generatePseudoRandomSalt(),
         makerAssetAmount,
         takerAssetAmount,
         makerAssetData,
         takerAssetData,
         makerFee: ZERO,
-        takerFee: ZERO
+        takerFee: ZERO,
   };
 
-  const orderHashHex = getOrderHashHex(order);
+  const orderHashHex = orderHashUtils.getOrderHashHex(order);
 
-  const signature = ecSignHashAsync(providerEngine, orderHashHex, makerAddress);
+  const signature = await signatureUtils.ecSignHashAsync(providerEngine, orderHashHex, maker);
   const signedOrder = { ...order, signature  };
 
-  contractWrappers.validateFillOrderThrowIfInvalidAsync(signedOrder, takerAssetAmount, takerAddress);
+  await contractWrappers.exchange.validateFillOrderThrowIfInvalidAsync(signedOrder, takerAssetAmount, taker);
+  console.log('Did it freaking finish? Jeez');
 });
 
