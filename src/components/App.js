@@ -1,18 +1,11 @@
 import BaseContainer from './BaseContainer';
 import BaseHeader from './BaseHeader';
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import ReceiveModal from '../modals/ReceiveModal';
 import SendModal from '../modals/SendModal';
 import web3 from '../web3';
 
-type State = {
-  account: string,
-  connected: boolean,
-  isSendModalVisible: boolean,
-  isReceiveModalVisible: boolean,
-};
-
-class App extends Component {
+class App extends React.PureComponent {
   state = {
     account: '',
     connected: false,
@@ -54,8 +47,8 @@ class App extends Component {
             web3={web3}
           />
         </div>
-        {isSendModalVisible && (<SendModal />)}
-        {isReceiveModalVisible && (<ReceiveModal />)}
+        {isSendModalVisible && (<SendModal closeModal={this._toggleSendModal} />)}
+        {isReceiveModalVisible && (<ReceiveModal closeModal={this._toggleReceiveModal} />)}
       </Fragment>
     );
   }
