@@ -5,9 +5,11 @@ const BaseContainer = ({account, connectionStatus, web3, toggleReceiveModal, tog
   return (
     <div className='base-container'>
       {!connectionStatus ?
-        <span className='error-connect-metamask'>
-          Please unlock your MetaMask wallet
-        </span> :
+        <div className='error-connect-container'>
+          <span className='error-connect-metamask'>
+            Please unlock your MetaMask wallet
+          </span>
+        </div> :
       <Account 
         account={account} 
         web3={web3} 
