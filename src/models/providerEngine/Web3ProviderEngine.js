@@ -1,5 +1,5 @@
 import {ProviderEngine} from './ProviderEngine';
-const ImportedWeb3ProviderEngine = require('web3-provider-engine');
+import {Web3ProviderEngine as ImportedWeb3ProviderEngine} from '0x.js';
 
 export class Web3ProviderEngine extends ProviderEngine {
 
@@ -14,11 +14,10 @@ export class Web3ProviderEngine extends ProviderEngine {
 
   start = () => {
     this.web3ProviderEngine.start();
-    console.log('provider engine started');
   }
 
-  sendAsync = async () => {
-    await this.web3ProviderEngine.sendAsync();
+  getEngine = () => {
+    return this.web3ProviderEngine;
   }
 
 }

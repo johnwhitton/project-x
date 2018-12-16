@@ -1,60 +1,60 @@
 import {
-  assetDataUtils,
   BigNumber,
-  ContractWrappers,
-  generatePseudoRandomSalt,
   Order,
   orderHashUtils,
   signatureUtils
 } from '0x.js';
 import { Web3Wrapper } from '@0x/web3-wrapper';
-import { getContractAddressesForNetworkOrThrow } from '@0x/contract-addresses';
-import {RPCSubprovider, Web3ProviderEngine } from '0x.js';
+import { RPCSubprovider } from '../subProviders/RPCSubprovider';
+import { encodeERC20AssetData } from '../../utils/AssetDataUtils';
+import { NULL_ADDRESS, DECIMALS, GANACHE_NETWORK_ID, RPC_URL } from '../Constants';
+import { ZERO } from '../../utils/math/CowriMath';
+import { generateRandom256Salt } from '../../utils/utils';
+import { Web3ProviderEngine } from '../providerEngine/Web3ProviderEngine';
+import { ZeroExERC20ContractWrapper } from '../contractWrappers/ZeroExERC20ContractWrapper';
+import { ZeroExContractAddresses } from '../contractAddresses/ZeroExContractAddresses';
 
 it ('Test the end-to-end process of signing a transaction', async () => {
-  const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
-  const ZERO = new BigNumber(0);
-  const providerEngine = new Web3ProviderEngine();
-  providerEngine.addProvider(new RPCSubprovider('http://localhost:8545'));
-  providerEngine.start();
-  const contractWrappers = new ContractWrappers(providerEngine, { networkId: 50 });
 
-  const web3Wrapper = new Web3Wrapper(providerEngine);
+  const providerEngine = new Web3ProviderEngine();
+  providerEngine.addProvider(new RPCSubprovider(RPC_URL).getSubprovider());
+  providerEngine.start();
+  const contractWrappers = new ZeroExERC20ContractWrapper(providerEngine.getEngine(), { networkId: GANACHE_NETWORK_ID });
+
+  const web3Wrapper = new Web3Wrapper(providerEngine.getEngine());
   const [maker, taker] = await web3Wrapper.getAvailableAddressesAsync();
 
-  //const makerAddress = '0x5409ed021d9299bf6814279a61411a7e866a631';
-  //const takerAddress = '0x6ecbe1db9ef729cbe972c83fb886247691fb6beb';
-  const contractAddresses = getContractAddressesForNetworkOrThrow(50);
+  const zeroExContractAddresses = new ZeroExContractAddresses();
+  const contractAddresses = zeroExContractAddresses.getContractAddressesForNetworkOrThrow(GANACHE_NETWORK_ID);
   const zrxTokenAddress = contractAddresses.zrxToken;
   const etherTokenAddress = contractAddresses.etherToken;
-  const DECIMALS = 18;
 
-  const makerAssetData = assetDataUtils.encodeERC20AssetData(zrxTokenAddress);
-  const takerAssetData = assetDataUtils.encodeERC20AssetData(etherTokenAddress);
+  const makerAssetData = encodeERC20AssetData(zrxTokenAddress);
+  const takerAssetData = encodeERC20AssetData(etherTokenAddress);
 
   // the amount the maker is selling of maker asset
   const makerAssetAmount = Web3Wrapper.toBaseUnitAmount(new BigNumber(5), DECIMALS);
   // the amount the maker wants of taker asset
   const takerAssetAmount = Web3Wrapper.toBaseUnitAmount(new BigNumber(0.1), DECIMALS);
-  const makerZRXApprovalTxHash = await contractWrappers.erc20Token.setUnlimitedProxyAllowanceAsync(
+  const makerZRXApprovalTxHash = await contractWrappers.setUnlimitedProxyAllowanceAsync(
         zrxTokenAddress,
-        maker,
-
+        maker
   );
+
   await web3Wrapper.awaitTransactionSuccessAsync(makerZRXApprovalTxHash);
-  const takerWETHApprovalTxHash = await contractWrappers.erc20Token.setUnlimitedProxyAllowanceAsync(
+  const takerWETHApprovalTxHash = await contractWrappers.setUnlimitedProxyAllowanceAsync(
         etherTokenAddress,
-        taker,
-
+        taker
   );
+
   await web3Wrapper.awaitTransactionSuccessAsync(takerWETHApprovalTxHash);
 
-  const takerWETHDepositTxHash = await contractWrappers.etherToken.depositAsync(
+  const takerWETHDepositTxHash = await contractWrappers.depositEtherAsync(
         etherTokenAddress,
         takerAssetAmount,
-        taker,
-
+        taker
   );
+
   await web3Wrapper.awaitTransactionSuccessAsync(takerWETHDepositTxHash);
 
   const randomExpiration = new BigNumber(Date.now() + 600000).ceil();
@@ -67,7 +67,7 @@ it ('Test the end-to-end process of signing a transaction', async () => {
         senderAddress: NULL_ADDRESS,
         feeRecipientAddress: NULL_ADDRESS,
         expirationTimeSeconds: randomExpiration,
-        salt: generatePseudoRandomSalt(),
+        salt: generateRandom256Salt(),
         makerAssetAmount,
         takerAssetAmount,
         makerAssetData,
@@ -78,10 +78,10 @@ it ('Test the end-to-end process of signing a transaction', async () => {
 
   const orderHashHex = orderHashUtils.getOrderHashHex(order);
 
-  const signature = await signatureUtils.ecSignHashAsync(providerEngine, orderHashHex, maker);
+  const signature = await signatureUtils.ecSignHashAsync(providerEngine.getEngine(), orderHashHex, maker);
   const signedOrder = { ...order, signature  };
 
-  await contractWrappers.exchange.validateFillOrderThrowIfInvalidAsync(signedOrder, takerAssetAmount, taker);
+  await contractWrappers.validateFillOrderThrowIfInvalidAsync(signedOrder, takerAssetAmount, taker);
   console.log('Did it freaking finish? Jeez');
 });
 

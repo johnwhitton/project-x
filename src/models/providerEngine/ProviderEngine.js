@@ -6,7 +6,7 @@ export class ProviderEngine {
     }
   }
 
-  addProvider = () => {
+  addProvider = (provider) => {
     throw new Error('cannot call methods from abstract class ProviderEngine');
   }
 
@@ -14,7 +14,7 @@ export class ProviderEngine {
     throw new Error('cannot call methods from abstract class ProviderEngine');
   }
 
-  sendAsync = () => {
+  getEngine = () => {
     throw new Error('cannot call methods from abstract class ProviderEngine');
   }
 }

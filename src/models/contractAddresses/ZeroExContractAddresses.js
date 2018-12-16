@@ -6,8 +6,8 @@ export class ZeroExContractAddresses extends ContractAddresses {
     super();
   }
 
-  getContractAddressesForNetworkOrThrow = () => {
-    const contractAddresses = getContractAddressesForNetworkOrThrow(50);
+  getContractAddressesForNetworkOrThrow = (networkId) => {
+    const contractAddresses = getContractAddressesForNetworkOrThrow(networkId);
     return contractAddresses;
   }
 }
