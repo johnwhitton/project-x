@@ -10,7 +10,7 @@ import { Web3Provider } from '../providers/Web3Provider';
 import { getOrderHashHex } from '../../utils/OrderHashUtils';
 import { ecSignHashAsync } from '../../utils/SignatureUtils';
 
-it ('Test the end-to-end process of signing a transaction', async () => {
+it ('Test the end-to-end process of making a transaction', async () => {
 
   const providerEngine = new Web3ProviderEngine();
   providerEngine.addProvider(new RPCSubprovider(RPC_URL).getSubprovider());
