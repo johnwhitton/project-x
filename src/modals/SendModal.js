@@ -1,36 +1,59 @@
-import React from 'react'
+import React from 'react';
 
-const SendModal = ({ closeModal }) => {
-  return (
-    <div className='modal-backdrop'>
-      <div className='send-modal-container'>
-        <form className='send-modal-form' action=''>
-          <div className='send-modal-form-container'>
-            <div className='send-modal-input address-input'>
-              <label htmlFor='wallet-address'><i className="fas fa-arrow-circle-up btn-icon"></i>Send from Metamask Wallet</label>
-              <input type='text' className='wallet-address' placeholder='Cowri' disabled />
+class SendModal extends React.Component {
+  render() {
+    const { closeModal } = this.props;
+    return (
+      <div className='modal-backdrop'>
+        <div className='send-modal-container'>
+          <form className='send-modal-form' action=''>
+            <div className='send-modal-form-container'>
+              <div className='send-modal-input address-input'>
+                <label htmlFor='wallet-address'>
+                  <i className='fas fa-arrow-circle-up btn-icon' />
+                  Send from Metamask Wallet
+                </label>
+                <input
+                  type='text'
+                  className='wallet-address'
+                  placeholder='Cowri'
+                  disabled
+                />
+              </div>
+              <div className='send-modal-input recipient-input'>
+                <label htmlFor='recipient-address'>Recipient Address</label>
+                <input
+                  type='text'
+                  className='recipient-address'
+                  placeholder='0x...'
+                />
+              </div>
+              <div className='send-modal-input amount-input'>
+                <label htmlFor='cowri-amount'>Amount</label>
+                <input type='text' className='cowri-amount' placeholder='0.0' />
+              </div>
+              <div className='send-button-group-container'>
+                <button
+                  className='btn btn-cancel no-margin'
+                  value='submit'
+                  onClick={() => closeModal(false)}>
+                  Cancel
+                </button>
+                <span className='send-modal-fee'>Fee: $0.014</span>
+                <button
+                  className='btn btn-send no-margin'
+                  value='submit'
+                  onClick={e => e.preventDefault()}>
+                  <i className='fas fa-arrow-circle-up btn-icon' />
+                  Send
+                </button>
+              </div>
             </div>
-            <div className='send-modal-input recipient-input'>
-              <label htmlFor='recipient-address'>Recipient Address</label>
-              <input type='text' className='recipient-address' placeholder='0x...' />
-            </div>
-            <div className='send-modal-input amount-input'>
-              <label htmlFor='cowri-amount'>Amount</label>
-              <input type='text' className='cowri-amount' placeholder='0.0' />
-            </div>
-            <div className='send-button-group-container'>
-              <button className='btn btn-cancel no-margin' value='submit' onClick={() => closeModal(false)}>Cancel</button>
-              <span className='send-modal-fee'>Fee: $0.014</span>
-              <button className='btn btn-send no-margin' value='submit' onClick={(e) => e.preventDefault()}>
-                <i className="fas fa-arrow-circle-up btn-icon"></i>
-                Send
-              </button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
-  )
+    );
+  }
 }
 
-export default SendModal
+export default SendModal;

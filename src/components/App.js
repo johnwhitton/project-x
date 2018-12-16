@@ -26,15 +26,24 @@ class App extends React.PureComponent {
   }
 
   _toggleSendModal = visible => {
-    this.setState(({ isSendModalVisible }) => ({ isSendModalVisible: visible }));
-  }
+    this.setState(({ isSendModalVisible }) => ({
+      isSendModalVisible: visible,
+    }));
+  };
 
   _toggleReceiveModal = visible => {
-    this.setState(({ isReceiveModalVisible }) => ({ isReceiveModalVisible: visible }));
-  }
+    this.setState(({ isReceiveModalVisible }) => ({
+      isReceiveModalVisible: visible,
+    }));
+  };
 
   render() {
-    const { account, connected, isReceiveModalVisible, isSendModalVisible } = this.state;
+    const {
+      account,
+      connected,
+      isReceiveModalVisible,
+      isSendModalVisible,
+    } = this.state;
     return (
       <Fragment>
         <div className='cowri-root'>
@@ -47,8 +56,10 @@ class App extends React.PureComponent {
             web3={web3}
           />
         </div>
-        {isSendModalVisible && (<SendModal closeModal={this._toggleSendModal} />)}
-        {isReceiveModalVisible && (<ReceiveModal closeModal={this._toggleReceiveModal} />)}
+        {isSendModalVisible && <SendModal closeModal={this._toggleSendModal} />}
+        {isReceiveModalVisible && (
+          <ReceiveModal closeModal={this._toggleReceiveModal} />
+        )}
       </Fragment>
     );
   }
