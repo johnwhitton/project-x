@@ -56,9 +56,18 @@ class App extends React.PureComponent {
             web3={web3}
           />
         </div>
-        {isSendModalVisible && <SendModal closeModal={this._toggleSendModal} />}
+        {isSendModalVisible && (
+          <SendModal
+            account={account}
+            closeModal={this._toggleSendModal}
+            web3={web3}
+          />
+        )}
         {isReceiveModalVisible && (
-          <ReceiveModal closeModal={this._toggleReceiveModal} />
+          <ReceiveModal
+            account={account}
+            closeModal={this._toggleReceiveModal}
+          />
         )}
       </Fragment>
     );
