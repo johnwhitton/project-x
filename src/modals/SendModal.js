@@ -129,8 +129,8 @@ class SendModal extends React.PureComponent {
                 )}
                 <button
                   className='btn btn-send no-margin'
-                  value='submit'
-                  onClick={() => this.sendTransaction()}>
+                  onClick={() => this.sendTransaction()}
+                  value='submit'>
                   <i className='fas fa-arrow-circle-up btn-icon' />
                   Send
                 </button>
