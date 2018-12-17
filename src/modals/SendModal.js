@@ -1,12 +1,14 @@
 import React from 'react';
 import ShellABI from '../ShellABI';
 import { convertValueToTokenDecimals } from '../utils/utils';
+import loader from '../images/loader.gif';
 // import Transaction from '../models/Transaction';
 
 class SendModal extends React.PureComponent {
   state = {
-    recipientAddress: '',
+    recipientAddress: '0xB9Bee603BD1449ADeB9a9Babd73e9b19f4Df5D50',
     recipientAmount: 0,
+    loading: false,
   };
 
   // sendTransaction = () => {
@@ -30,9 +32,9 @@ class SendModal extends React.PureComponent {
    * Submits transfer to address from state
    */
   sendTransaction = async () => {
-    const { account, web3 } = this.props;
+    const { account, closeModal, web3 } = this.props;
     const { recipientAddress, recipientAmount } = this.state;
-    const kennyAddress = '0xB9Bee603BD1449ADeB9a9Babd73e9b19f4Df5D50';
+    this.setState({ loading: true });
     try {
       const token = await new web3.eth.Contract(
         ShellABI,
@@ -43,17 +45,17 @@ class SendModal extends React.PureComponent {
         recipientAmount,
         tokenContractDecimals,
       );
-      console.log('token', token);
       await token.methods
         .transfer(recipientAddress, String(recipientDecimalAmout))
         .send({ from: account })
         .then(async txObject => {
-          console.log('tx', txObject);
+          console.log('tx success:', txObject);
+          this.setState({ loading: false });
+          closeModal(false);
         })
         .catch(() => {
           throw new Error('User denied transaction signature.');
         });
-      console.log('did not wait');
     } catch (error) {
       console.error(error);
     }
@@ -74,6 +76,7 @@ class SendModal extends React.PureComponent {
   };
 
   render() {
+    const { loading } = this.state;
     const { closeModal } = this.props;
     return (
       <div className='modal-backdrop'>
@@ -99,6 +102,7 @@ class SendModal extends React.PureComponent {
                   onChange={this.onReceipientAddressChange}
                   placeholder='0x...'
                   type='text'
+                  value={this.state.recipientAddress}
                 />
               </div>
               <div className='send-modal-input amount-input'>
@@ -117,7 +121,11 @@ class SendModal extends React.PureComponent {
                   onClick={() => closeModal(false)}>
                   Cancel
                 </button>
-                <span className='send-modal-fee'>Fee: $0.014</span>
+                {loading ? (
+                  <img className='loading-spinner' src={loader} />
+                ) : (
+                  <span className='send-modal-fee'>Fee: $0.014</span>
+                )}
                 <button
                   className='btn btn-send no-margin'
                   value='submit'
