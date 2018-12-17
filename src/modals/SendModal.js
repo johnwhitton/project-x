@@ -6,9 +6,10 @@ import { convertValueToTokenDecimals } from '../utils/utils';
 class SendModal extends React.PureComponent {
   state = {
     recipientAddress: '',
+    recipientAmount: 0,
   };
 
-  // submitTransfer = () => {
+  // sendTransaction = () => {
   //   const { recipientAddress } = this.state;
   //   const { account, web3 } = this.props;
   //   try {
@@ -28,48 +29,31 @@ class SendModal extends React.PureComponent {
   /**
    * Submits transfer to address from state
    */
-  sendTransaction = async (
-    receiverTokenAddress = '0xB9Bee603BD1449ADeB9a9Babd73e9b19f4Df5D50',
-    receiverTokenAmount = '10',
-  ) => {
-    const { web3 } = this.props;
+  sendTransaction = async () => {
+    const { account, web3 } = this.props;
+    const { recipientAddress, recipientAmount } = this.state;
+    const kennyAddress = '0xB9Bee603BD1449ADeB9a9Babd73e9b19f4Df5D50';
     try {
-      // make sure balance can support transfer
-      const accounts = await web3.eth.getAccounts();
-      // const transferList = this.convertCowriToStableTokens(
-      //   this.state.localShell,
-      //   this.state.cowriToken.balance,
-      //   receiverTokenAmount,
-      // );
-      // await Promise.all(
-      // transferList.map(async transfer => {
       const token = await new web3.eth.Contract(
         ShellABI,
         '0xad31da2bfd3113394745954445359caacb54bfef',
       );
-      const tokenDecimals = await token.methods.decimals().call();
-      const tokenValue = convertValueToTokenDecimals(
-        receiverTokenAmount,
-        tokenDecimals,
+      const tokenContractDecimals = await token.methods.decimals().call();
+      const recipientDecimalAmout = convertValueToTokenDecimals(
+        recipientAmount,
+        tokenContractDecimals,
       );
       console.log('token', token);
-      console.log('tokenDecimals', tokenDecimals);
-      console.log('tokenValue', tokenValue);
-      console.log('tokenValue type', typeof tokenValue);
       await token.methods
-        .transfer(receiverTokenAddress, String(tokenValue))
-        .send({ from: accounts[0] })
+        .transfer(recipientAddress, String(recipientDecimalAmout))
+        .send({ from: account })
         .then(async txObject => {
           console.log('tx', txObject);
-          // get updated shell
-          // await this.getShellMap();
         })
         .catch(() => {
           throw new Error('User denied transaction signature.');
         });
       console.log('did not wait');
-      // }),
-      // );
     } catch (error) {
       console.error(error);
     }
@@ -79,6 +63,13 @@ class SendModal extends React.PureComponent {
     const target = event.target.value;
     this.setState(({ recipientAddress }) => ({
       recipientAddress: target,
+    }));
+  };
+
+  onReceipientAmountChange = event => {
+    const target = event.target.value;
+    this.setState(({ recipientAmount }) => ({
+      recipientAmount: target,
     }));
   };
 
@@ -112,7 +103,12 @@ class SendModal extends React.PureComponent {
               </div>
               <div className='send-modal-input amount-input'>
                 <label htmlFor='cowri-amount'>Amount</label>
-                <input type='text' className='cowri-amount' placeholder='0.0' />
+                <input
+                  className='cowri-amount'
+                  onChange={this.onReceipientAmountChange}
+                  placeholder='0.0'
+                  type='text'
+                />
               </div>
               <div className='send-button-group-container'>
                 <button
