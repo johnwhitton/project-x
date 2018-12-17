@@ -54,6 +54,7 @@ class SendModal extends React.PureComponent {
           closeModal(false);
         })
         .catch(() => {
+          closeModal(false);
           throw new Error('User denied transaction signature.');
         });
     } catch (error) {
