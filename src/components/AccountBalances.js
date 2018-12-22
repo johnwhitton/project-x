@@ -61,7 +61,7 @@ class AccountBalances extends React.Component {
    */
   getShellMap = async () => {
     const {web3} = this.props;
-    const {cowriShellMap, maxShellSize, shellMappingContract} = this.state;
+    const {maxShellSize, shellMappingContract} = this.state;
     const localAccounts = await web3.eth.getAccounts();
     const tokenContracts = [];
     for (let i = 0; i < maxShellSize; i++) {
@@ -76,9 +76,10 @@ class AccountBalances extends React.Component {
       }
     }
     if (tokenContracts.length > 0) {
-      this.setState({cowriShellMap: tokenContracts}, () =>
-        this.buildLocalShell(cowriShellMap),
-      );
+      this.setState({cowriShellMap: tokenContracts}, () => {
+        const {cowriShellMap} = this.state;
+        this.buildLocalShell(cowriShellMap);
+      });
     } else {
       // prompt user to create shell
       // console.log('create shell!');
