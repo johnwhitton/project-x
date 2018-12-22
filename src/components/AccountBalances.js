@@ -1,5 +1,5 @@
-import ABI from '../ABI';
 import React from 'react';
+import ABI from '../ABI';
 import ShellABI from '../ShellABI';
 import Table from './Table';
 import {
@@ -10,10 +10,10 @@ import {
 
 class AccountBalances extends React.Component {
   DATA_COLUMNS = [
-    { name: 'Asset', className: 'column-asset' },
-    { name: 'Quantity', className: 'column-quantity' },
-    { name: 'Price', className: 'column-price' },
-    { name: 'Total', className: 'column-total' },
+    {name: 'Asset', className: 'column-asset'},
+    {name: 'Quantity', className: 'column-quantity'},
+    {name: 'Price', className: 'column-price'},
+    {name: 'Total', className: 'column-total'},
   ];
 
   state = {
@@ -26,7 +26,9 @@ class AccountBalances extends React.Component {
 
   // TODO: load shell mapping contract address from DB
   SHELL_MAPPING_CONTRACT_ADDRESS = '0xc8f91597515f5baa3ec9767b34b517cdeb839855';
+
   MAX_SHELL_SIZE = 10;
+
   DECIMALS = 18;
 
   async componentDidMount() {
@@ -43,7 +45,7 @@ class AccountBalances extends React.Component {
       ABI,
       this.SHELL_MAPPING_CONTRACT_ADDRESS,
     );
-    this.setState({ shellMappingContract }, () =>
+    this.setState({shellMappingContract}, () =>
       console.info('shell mapping contract set'),
     );
   };
@@ -55,7 +57,7 @@ class AccountBalances extends React.Component {
     const maxShellSize = await this.state.shellMappingContract.methods
       .maxShellSize()
       .call();
-    this.setState({ maxShellSize: Number(maxShellSize) }, () =>
+    this.setState({maxShellSize: Number(maxShellSize)}, () =>
       console.info('max shell size set'),
     );
   };
@@ -78,7 +80,7 @@ class AccountBalances extends React.Component {
       }
     }
     if (tokenContracts.length > 0) {
-      this.setState({ cowriShellMap: tokenContracts }, () =>
+      this.setState({cowriShellMap: tokenContracts}, () =>
         this.buildLocalShell(this.state.cowriShellMap),
       );
     } else {
@@ -114,12 +116,12 @@ class AccountBalances extends React.Component {
         const address = contractAddress;
 
         if (quantity > 0) {
-          localShell.push({ address, asset, price, quantity, symbol, total });
+          localShell.push({address, asset, price, quantity, symbol, total});
         }
       }),
     );
 
-    this.setState({ localShell }, () =>
+    this.setState({localShell}, () =>
       this.getCowriBalance(this.state.localShell),
     );
   };
@@ -132,9 +134,10 @@ class AccountBalances extends React.Component {
     const symbol = 'wri';
     const asset = 'Cowri';
     const address = '0x0000';
-    const quantity = localShell.reduce((currentQuantity, token) => {
-      return (currentQuantity += token.quantity);
-    }, 0);
+    const quantity = localShell.reduce(
+      (currentQuantity, token) => (currentQuantity += token.quantity),
+      0,
+    );
     const total = quantity * price;
 
     const cowriToken = {
@@ -146,7 +149,7 @@ class AccountBalances extends React.Component {
       total,
     };
 
-    this.setState({ cowriToken: cowriToken });
+    this.setState({cowriToken});
   };
 
   render() {

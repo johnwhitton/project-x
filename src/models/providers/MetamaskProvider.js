@@ -4,7 +4,4 @@ export class MetamaskProvider extends Provider {
   constructor() {
     super();
   }
-
 }
-
-

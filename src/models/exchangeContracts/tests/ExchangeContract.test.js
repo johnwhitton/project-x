@@ -1,6 +1,6 @@
-import {ExchangeContract} from '../ExchangeContract';
 import {assert} from 'chai';
+import {ExchangeContract} from '../ExchangeContract';
 
-it ('Test that the abstract class cannot be instantiated', () => {
+it('Test that the abstract class cannot be instantiated', () => {
   assert.throw(() => new ExchangeContract());
 });

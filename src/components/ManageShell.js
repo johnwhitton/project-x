@@ -18,14 +18,14 @@ class ManageShell extends Component {
     tokensToBeRemoved: [],
     error: false,
     errorMessage: '',
-  }
-  
+  };
+
   DEFAULT_SHELL = [
     {name: 'TrueUSD', source: tusdImage},
     {name: 'Dai', source: daiImage},
     {name: 'USDC', source: usdcImage},
     {name: 'Paxos', source: paxImage},
-    {name: 'Basecoin', source: basisImage}, 
+    {name: 'Basecoin', source: basisImage},
     {name: 'Tether', source: usdtImage},
     {name: 'Maker', source: mkrImage},
     {name: 'Carbon', source: carbonImage},
@@ -33,49 +33,65 @@ class ManageShell extends Component {
 
   componentDidMount = () => {
     this.getLocalShell();
-  }
+  };
 
   getLocalShell = () => {
     if (this.state.localShell.length === 0) {
       this.setState({localShell: [...this.DEFAULT_SHELL]});
     }
-  }
+  };
 
   addLocalShellToken = token => {
-    const includesToken = Boolean(this.state.localShell.find(currentToken => currentToken.name === token));
+    const includesToken = Boolean(
+      this.state.localShell.find(currentToken => currentToken.name === token),
+    );
     if (includesToken) {
-      this.setState({error: true, errorMessage: `Your shell already contains ${token}!`});
+      this.setState({
+        error: true,
+        errorMessage: `Your shell already contains ${token}!`,
+      });
       return;
     }
     this.setState(prevState => ({
       localShell: [...prevState.localShell, {token}],
     }));
-  }
+  };
 
   removeLocalShellToken = token => {
-    const includesToken = Boolean(this.state.localShell.find(currentToken => currentToken.name === token));
+    const includesToken = Boolean(
+      this.state.localShell.find(currentToken => currentToken.name === token),
+    );
     if (!includesToken) {
-      this.setState({error: true, errorMessage: `Your shell does not contain ${token}!`});
+      this.setState({
+        error: true,
+        errorMessage: `Your shell does not contain ${token}!`,
+      });
       return;
     }
     // TODO: refactor
-    const localShellTokenIndex = this.state.localShell.findIndex(currentToken => currentToken.name === token);
-    const tokenToBeRemovedIndex = this.state.tokensToBeRemoved.findIndex(currentToken => currentToken.name === token);
+    const localShellTokenIndex = this.state.localShell.findIndex(
+      currentToken => currentToken.name === token,
+    );
+    const tokenToBeRemovedIndex = this.state.tokensToBeRemoved.findIndex(
+      currentToken => currentToken.name === token,
+    );
     const updatedLocalShell = this.state.localShell;
     const updatedtokensToBeRemoved = this.state.tokensToBeRemoved;
     updatedLocalShell.splice(localShellTokenIndex, 1);
     updatedtokensToBeRemoved.splice(tokenToBeRemovedIndex, 1);
     this.setState({
-      localShell: updatedLocalShell, 
+      localShell: updatedLocalShell,
       tokensToBeRemoved: updatedtokensToBeRemoved,
     });
-  }
+  };
 
   removeSelectedTokens = async () => {
-    await Promise.all([...this.state.tokensToBeRemoved].map(async token => {
-      await this.removeLocalShellToken(token);
-   }));
-  }
+    await Promise.all(
+      [...this.state.tokensToBeRemoved].map(async token => {
+        await this.removeLocalShellToken(token);
+      }),
+    );
+  };
 
   setTokensToBeRemoved = tokenName => {
     let updatedtokensToBeRemoved;
@@ -86,8 +102,8 @@ class ManageShell extends Component {
     } else {
       updatedtokensToBeRemoved = [...this.state.tokensToBeRemoved, tokenName];
     }
-    this.setState({tokensToBeRemoved: updatedtokensToBeRemoved,});
-  }
+    this.setState({tokensToBeRemoved: updatedtokensToBeRemoved});
+  };
 
   render() {
     const localShell = this.state.localShell;
@@ -98,27 +114,29 @@ class ManageShell extends Component {
         <div className='manage-shell-header-container'>
           <span className='manage-selection-message'>{selectionMessage}</span>
           {Boolean(tokensToBeRemoved.length) && (
-            <button 
-              className='btn btn-remove no-margin' 
-              value='submit' 
-              onClick={this.removeSelectedTokens}>
-                <i className='far fa-times-circle btn-icon'></i>
-                {`Remove from shell`}
-            </button>)}
+            <button
+              className='btn btn-remove no-margin'
+              value='submit'
+              onClick={this.removeSelectedTokens}
+            >
+              <i className='far fa-times-circle btn-icon' />
+              {`Remove from shell`}
+            </button>
+          )}
         </div>
         <div className='manage-token-items'>
           {localShell.map(token => (
-            <TokenCard 
-              token={token} 
+            <TokenCard
+              token={token}
               key={token.name}
               setTokensToBeRemoved={this.setTokensToBeRemoved}
-            />)
-          )}
-          <AddTokenCard/>
+            />
+          ))}
+          <AddTokenCard />
         </div>
       </div>
-    )
+    );
   }
-};
+}
 
 export default ManageShell;

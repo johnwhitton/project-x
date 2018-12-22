@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ReceiveModal = ({ closeModal }) => {
+const ReceiveModal = ({closeModal}) => {
   const myAddress = '0x0A7E5D81c57fDFC97270135633E77F505170807C';
   return (
     <div className='modal-backdrop'>
@@ -13,7 +13,8 @@ const ReceiveModal = ({ closeModal }) => {
           <button
             className='btn btn-cancel no-margin'
             value='close'
-            onClick={() => closeModal(false)}>
+            onClick={() => closeModal(false)}
+          >
             Close
           </button>
         </div>

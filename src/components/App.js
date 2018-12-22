@@ -1,6 +1,6 @@
+import React, {Fragment} from 'react';
 import BaseContainer from './BaseContainer';
 import BaseHeader from './BaseHeader';
-import React, { Fragment } from 'react';
 import ReceiveModal from '../modals/ReceiveModal';
 import SendModal from '../modals/SendModal';
 import web3 from '../web3';
@@ -21,18 +21,18 @@ class App extends React.PureComponent {
         connected: true,
       });
     } else {
-      this.setState({ connected: false });
+      this.setState({connected: false});
     }
   }
 
   _toggleSendModal = visible => {
-    this.setState(({ isSendModalVisible }) => ({
+    this.setState(({isSendModalVisible}) => ({
       isSendModalVisible: visible,
     }));
   };
 
   _toggleReceiveModal = visible => {
-    this.setState(({ isReceiveModalVisible }) => ({
+    this.setState(({isReceiveModalVisible}) => ({
       isReceiveModalVisible: visible,
     }));
   };

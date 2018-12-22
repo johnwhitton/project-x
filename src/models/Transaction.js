@@ -1,4 +1,4 @@
-import { CowriShell } from './CowriShell';
+import {CowriShell} from './CowriShell';
 import CowriMath from '../utils/math/CowriMath';
 
 export class Transaction {
@@ -14,33 +14,29 @@ export class Transaction {
   }
 
   isOverlapEnoughToCoverTX = () => {
-    let overlappedCowriShell = this.senderCowriShell.getOverlappedCowriShell(
+    const overlappedCowriShell = this.senderCowriShell.getOverlappedCowriShell(
       this.receiverCowriShell,
     );
     return overlappedCowriShell.getBalance() >= this.amount;
   };
 
   isTotalBalanceEnoughToCoverTX = (epsilon = 0) => {
-    let senderBalance = this.senderCowriShell.getBalance();
+    const senderBalance = this.senderCowriShell.getBalance();
     return (
       CowriMath.times(senderBalance, CowriMath.minus(1, epsilon)) >= this.amount
     );
   };
 
-  isVanilla = () => {
-    return this.isOverlapEnoughToCoverTX();
-  };
+  isVanilla = () => this.isOverlapEnoughToCoverTX();
 
-  isIsmael = () => {
-    return !this.isOverlapEnoughToCoverTX();
-  };
+  isIsmael = () => !this.isOverlapEnoughToCoverTX();
 
   getCowriShellThatCoversBalance = () => {
-    let overlappedCowriShell = this.senderCowriShell.getOverlappedCowriShell(
+    const overlappedCowriShell = this.senderCowriShell.getOverlappedCowriShell(
       this.receiverCowriShell,
     );
-    let overlappedTokens = overlappedCowriShell.getSortedTokenArray();
-    var returnedBalances = JSON.parse(JSON.stringify(overlappedTokens)); //To get a deep copy in memory
+    const overlappedTokens = overlappedCowriShell.getSortedTokenArray();
+    const returnedBalances = JSON.parse(JSON.stringify(overlappedTokens)); // To get a deep copy in memory
     for (let i = 0; i < returnedBalances.length; i++) {
       returnedBalances[i].balance = 0;
     }
@@ -57,7 +53,7 @@ export class Transaction {
       if (sum === this.amount) {
         return new CowriShell(returnedBalances);
       }
-      for (var j = 0; j < i; j++) {
+      for (let j = 0; j < i; j++) {
         if (sum + overlappedTokens[j].balance >= this.amount) {
           returnedBalances[j].balance = CowriMath.minus(this.amount, sum);
           return new CowriShell(returnedBalances);
@@ -66,7 +62,7 @@ export class Transaction {
     }
   };
 
-  //TODO: TEST THIS
+  // TODO: TEST THIS
   getCowriShellThatCoversBalanceIfThereIsNoOverlap = (
     epsilon = [0.01, 0.025, 0.05],
   ) => {
@@ -75,10 +71,10 @@ export class Transaction {
       throw 'Every epsilon puts the cost over the balance';
     }
 
-    let senderTokens = this.senderCowriShell.getSortedTokenArray();
-    let rateQueryBatches = [];
+    const senderTokens = this.senderCowriShell.getSortedTokenArray();
+    const rateQueryBatches = [];
     for (let eps = 0; eps > epsilon.length; eps++) {
-      let returnedBalances = JSON.parse(JSON.stringify(senderTokens)); //To get a deep copy in memory
+      const returnedBalances = JSON.parse(JSON.stringify(senderTokens)); // To get a deep copy in memory
       for (let i = 0; i < returnedBalances.length; i++) {
         returnedBalances[i].balance = 0;
       }
@@ -114,8 +110,8 @@ export class Transaction {
         );
         continue;
       }
-      for (var j = 0; j < i; j++) {
-        let remainder = this.amount - sum;
+      for (let j = 0; j < i; j++) {
+        const remainder = this.amount - sum;
         if (
           senderTokens[j].balance >=
           CowriMath.times(remainder, CowriMath.plus(1, epsilon[eps]))
