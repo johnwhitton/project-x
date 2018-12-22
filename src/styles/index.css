@@ -144,7 +144,7 @@ body {
   background-color: var(--network-status-disconnected);
 }
 
-.network-name {}
+/* .network-name {} */
 
 .action-container {
   display: flex;
