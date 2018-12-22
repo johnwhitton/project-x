@@ -1,6 +1,6 @@
 import React from 'react';
 import ShellABI from '../ShellABI';
-import { convertValueToTokenDecimals } from '../utils/utils';
+import {convertValueToTokenDecimals} from '../utils/utils';
 import loader from '../images/loader.gif';
 // import Transaction from '../models/Transaction';
 
@@ -32,9 +32,9 @@ class SendModal extends React.PureComponent {
    * Submits transfer to address from state
    */
   sendTransaction = async () => {
-    const { account, closeModal, web3 } = this.props;
-    const { recipientAddress, recipientAmount } = this.state;
-    this.setState({ loading: true });
+    const {account, closeModal, web3} = this.props;
+    const {recipientAddress, recipientAmount} = this.state;
+    this.setState({loading: true});
     try {
       const token = await new web3.eth.Contract(
         ShellABI,
@@ -47,10 +47,10 @@ class SendModal extends React.PureComponent {
       );
       await token.methods
         .transfer(recipientAddress, String(recipientDecimalAmout))
-        .send({ from: account })
+        .send({from: account})
         .then(async txObject => {
           console.log('tx success:', txObject);
-          this.setState({ loading: false });
+          this.setState({loading: false});
           closeModal(false);
         })
         .catch(() => {
@@ -64,21 +64,21 @@ class SendModal extends React.PureComponent {
 
   onReceipientAddressChange = event => {
     const target = event.target.value;
-    this.setState(({ recipientAddress }) => ({
+    this.setState(({recipientAddress}) => ({
       recipientAddress: target,
     }));
   };
 
   onReceipientAmountChange = event => {
     const target = event.target.value;
-    this.setState(({ recipientAmount }) => ({
+    this.setState(({recipientAmount}) => ({
       recipientAmount: target,
     }));
   };
 
   render() {
-    const { loading } = this.state;
-    const { closeModal } = this.props;
+    const {loading} = this.state;
+    const {closeModal} = this.props;
     return (
       <div className='modal-backdrop'>
         <div className='send-modal-container'>
