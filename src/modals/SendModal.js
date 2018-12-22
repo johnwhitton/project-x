@@ -83,6 +83,12 @@ class SendModal extends React.PureComponent {
       <div className='modal-backdrop'>
         <div className='send-modal-container'>
           <div className='send-modal-form'>
+            {/* TODO: support multiple screen resolutions */}
+            {loading && (
+              <div className='loading-overlay'>
+                <img className='loading-spinner' src={loader} />
+              </div>
+            )}
             <div className='send-modal-form-container'>
               <div className='send-modal-input address-input'>
                 <label htmlFor='wallet-address'>
@@ -122,11 +128,7 @@ class SendModal extends React.PureComponent {
                   onClick={() => closeModal(false)}>
                   Cancel
                 </button>
-                {loading ? (
-                  <img className='loading-spinner' src={loader} />
-                ) : (
-                  <span className='send-modal-fee'>Fee: $0.014</span>
-                )}
+                <span className='send-modal-fee'>Fee: $0.014</span>
                 <button
                   className='btn btn-send no-margin'
                   onClick={() => this.sendTransaction()}
