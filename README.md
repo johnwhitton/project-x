@@ -26,6 +26,12 @@ TODO
 
 ## Installation
 
+#### Pre-requirements
+
+- [MetaMask](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn "MetaMask Chrome Extension]")
+- [Node.js](https://nodejs.org/en/download/) > v8.x
+- [Yarn](https://yarnpkg.com/en/) > v1.x
+
 #### Clone project
 Clone repo from github:
 ```sh
@@ -34,9 +40,6 @@ git clone https://github.com/cowri/project-x.git
 ```
 
 #### Project dependencies
-
-Install [MetaMask](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn "MetaMask Chrome Extension]") Chrome Extension:
-> MetaMask is an extension for accessing Ethereum enabled Dapps in Chrome
 
 Install project dependencies:
 ```sh
