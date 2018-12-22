@@ -144,7 +144,6 @@ class AccountBalances extends React.Component {
       0,
     );
     const total = quantity * price;
-
     const cowriToken = {
       address,
       asset,
