@@ -368,12 +368,16 @@ body {
   font-size: 14px;
 }
 
-.qr-code {
+.qr-code-container {
   width: 259px;
   height: 259px;
   background-color: white;
   border: 1px solid black;
   align-self: center;
+}
+
+.qr-code {
+  width: 100%;
 }
 
 .receive-address {

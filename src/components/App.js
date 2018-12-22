@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import QRCode from 'qrcode';
 import BaseContainer from './BaseContainer';
 import BaseHeader from './BaseHeader';
 import ReceiveModal from '../modals/ReceiveModal';
@@ -11,14 +12,17 @@ class App extends React.PureComponent {
     connected: false,
     isSendModalVisible: false,
     isReceiveModalVisible: false,
+    qr: '',
   };
 
   async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
+    const qrURI = await QRCode.toDataURL(accounts[0]);
     if (accounts.length > 0) {
       this.setState({
         account: accounts[0],
         connected: true,
+        qr: qrURI,
       });
     } else {
       this.setState({connected: false});
@@ -39,6 +43,7 @@ class App extends React.PureComponent {
       connected,
       isReceiveModalVisible,
       isSendModalVisible,
+      qr,
     } = this.state;
     return (
       <Fragment>
@@ -63,6 +68,7 @@ class App extends React.PureComponent {
           <ReceiveModal
             account={account}
             closeModal={this.toggleReceiveModal}
+            qr={qr}
           />
         )}
       </Fragment>
