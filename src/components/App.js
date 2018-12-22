@@ -25,13 +25,13 @@ class App extends React.PureComponent {
     }
   }
 
-  _toggleSendModal = visible => {
+  toggleSendModal = visible => {
     this.setState(({isSendModalVisible}) => ({
       isSendModalVisible: visible,
     }));
   };
 
-  _toggleReceiveModal = visible => {
+  toggleReceiveModal = visible => {
     this.setState(({isReceiveModalVisible}) => ({
       isReceiveModalVisible: visible,
     }));
@@ -51,22 +51,22 @@ class App extends React.PureComponent {
           <BaseContainer
             account={account}
             connectionStatus={connected}
-            toggleReceiveModal={this._toggleReceiveModal}
-            toggleSendModal={this._toggleSendModal}
+            toggleReceiveModal={this.toggleReceiveModal}
+            toggleSendModal={this.toggleSendModal}
             web3={web3}
           />
         </div>
         {isSendModalVisible && (
           <SendModal
             account={account}
-            closeModal={this._toggleSendModal}
+            closeModal={this.toggleSendModal}
             web3={web3}
           />
         )}
         {isReceiveModalVisible && (
           <ReceiveModal
             account={account}
-            closeModal={this._toggleReceiveModal}
+            closeModal={this.toggleReceiveModal}
           />
         )}
       </Fragment>

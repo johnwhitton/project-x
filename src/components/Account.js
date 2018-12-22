@@ -15,7 +15,7 @@ class Account extends React.Component {
   };
 
   render() {
-    const view = this.state.view;
+    const {view} = this.state;
     const {account, web3, toggleReceiveModal, toggleSendModal} = this.props;
     return (
       <div className='account-container'>
