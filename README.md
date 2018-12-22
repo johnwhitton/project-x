@@ -35,6 +35,8 @@ git clone https://github.com/cowri/project-x.git
 
 #### Project dependencies
 
+[Install MetaMask Chrome Extension](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
+
 Install project dependencies:
 ```sh
 # run install script
