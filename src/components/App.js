@@ -26,15 +26,11 @@ class App extends React.PureComponent {
   }
 
   toggleSendModal = visible => {
-    this.setState(({isSendModalVisible}) => ({
-      isSendModalVisible: visible,
-    }));
+    this.setState({isSendModalVisible: visible});
   };
 
   toggleReceiveModal = visible => {
-    this.setState(({isReceiveModalVisible}) => ({
-      isReceiveModalVisible: visible,
-    }));
+    this.setState({isReceiveModalVisible: visible});
   };
 
   render() {
