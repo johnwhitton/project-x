@@ -2,7 +2,7 @@
 ## What is project-x?
  > stablecoin shell protocol
  
- ![project-x Demo](./project-x.png "project-x Demo png")
+ ![project-x Demo](./project-x.png "project-x demo png")
  
 ## Table of Contents
 
