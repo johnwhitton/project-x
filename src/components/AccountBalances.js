@@ -2,11 +2,7 @@ import React from 'react';
 import ABI from '../ABI';
 import ShellABI from '../ShellABI';
 import Table from './Table';
-import {
-  convertValueToTokenDecimals,
-  convertValueFromTokenDecimals,
-  getTokenToCowriRatio,
-} from '../utils/utils';
+import {convertValueFromTokenDecimals} from '../utils/utils';
 
 class AccountBalances extends React.Component {
   DATA_COLUMNS = [
@@ -41,36 +37,36 @@ class AccountBalances extends React.Component {
    * get shell mapping contract
    */
   getShellMappingContract = async () => {
-    const shellMappingContract = await new this.props.web3.eth.Contract(
+    const {web3} = this.props;
+    const shellMappingContract = await new web3.eth.Contract(
       ABI,
       this.SHELL_MAPPING_CONTRACT_ADDRESS,
     );
-    this.setState({shellMappingContract}, () =>
-      console.info('shell mapping contract set'),
-    );
+    this.setState({shellMappingContract});
   };
 
   /**
    * get max shell size from contract and save in state
    */
   setMaxShellSize = async () => {
-    const maxShellSize = await this.state.shellMappingContract.methods
+    const {shellMappingContract} = this.state;
+    const maxShellSize = await shellMappingContract.methods
       .maxShellSize()
       .call();
-    this.setState({maxShellSize: Number(maxShellSize)}, () =>
-      console.info('max shell size set'),
-    );
+    this.setState({maxShellSize: Number(maxShellSize)});
   };
 
   /**
    * get users shell map from contract
    */
   getShellMap = async () => {
-    const localAccounts = await this.props.web3.eth.getAccounts();
+    const {web3} = this.props;
+    const {cowriShellMap, maxShellSize, shellMappingContract} = this.state;
+    const localAccounts = await web3.eth.getAccounts();
     const tokenContracts = [];
-    for (let i = 0; i < this.state.maxShellSize; i++) {
+    for (let i = 0; i < maxShellSize; i++) {
       try {
-        const tokenContract = await this.state.shellMappingContract.methods
+        const tokenContract = await shellMappingContract.methods
           .shellMap(localAccounts[0], i)
           .call();
         tokenContracts.push(tokenContract);
@@ -81,11 +77,11 @@ class AccountBalances extends React.Component {
     }
     if (tokenContracts.length > 0) {
       this.setState({cowriShellMap: tokenContracts}, () =>
-        this.buildLocalShell(this.state.cowriShellMap),
+        this.buildLocalShell(cowriShellMap),
       );
     } else {
       // prompt user to create shell
-      console.log('create shell!');
+      // console.log('create shell!');
     }
   };
 
@@ -93,11 +89,12 @@ class AccountBalances extends React.Component {
    * build local shell (in parrallel)
    */
   buildLocalShell = async cowriShellMap => {
-    const localAccounts = await this.props.web3.eth.getAccounts();
-    const localShell = [];
+    const {web3} = this.props;
+    const localAccounts = await web3.eth.getAccounts();
+    const updatedLocalShell = [];
     await Promise.all(
       cowriShellMap.map(async contractAddress => {
-        const tokenContract = await new this.props.web3.eth.Contract(
+        const tokenContract = await new web3.eth.Contract(
           ShellABI,
           contractAddress,
         );
@@ -116,14 +113,22 @@ class AccountBalances extends React.Component {
         const address = contractAddress;
 
         if (quantity > 0) {
-          localShell.push({address, asset, price, quantity, symbol, total});
+          updatedLocalShell.push({
+            address,
+            asset,
+            price,
+            quantity,
+            symbol,
+            total,
+          });
         }
       }),
     );
 
-    this.setState({localShell}, () =>
-      this.getCowriBalance(this.state.localShell),
-    );
+    this.setState({localShell: updatedLocalShell}, () => {
+      const {localShell} = this.state;
+      this.getCowriBalance(localShell);
+    });
   };
 
   /**
@@ -135,7 +140,7 @@ class AccountBalances extends React.Component {
     const asset = 'Cowri';
     const address = '0x0000';
     const quantity = localShell.reduce(
-      (currentQuantity, token) => (currentQuantity += token.quantity),
+      (currentQuantity, token) => currentQuantity + token.quantity,
       0,
     );
     const total = quantity * price;
@@ -153,12 +158,10 @@ class AccountBalances extends React.Component {
   };
 
   render() {
+    const {cowriToken, localShell} = this.state;
     return (
       <div className='account-balances-container'>
-        <Table
-          columns={this.DATA_COLUMNS}
-          rows={[this.state.cowriToken, ...this.state.localShell]}
-        />
+        <Table columns={this.DATA_COLUMNS} rows={[cowriToken, ...localShell]} />
       </div>
     );
   }

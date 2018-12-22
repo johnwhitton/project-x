@@ -4,6 +4,12 @@
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
     "react/prop-types": 0,
     "react/jsx-filename-extension": [
       1,
