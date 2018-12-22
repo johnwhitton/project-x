@@ -125,14 +125,16 @@ class SendModal extends React.PureComponent {
                 <button
                   className='btn btn-cancel no-margin'
                   value='submit'
-                  onClick={() => closeModal(false)}>
+                  onClick={() => closeModal(false)}
+                >
                   Cancel
                 </button>
                 <span className='send-modal-fee'>Fee: $0.014</span>
                 <button
                   className='btn btn-send no-margin'
                   onClick={() => this.sendTransaction()}
-                  value='submit'>
+                  value='submit'
+                >
                   <i className='fas fa-arrow-circle-up btn-icon' />
                   Send
                 </button>

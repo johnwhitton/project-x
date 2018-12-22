@@ -1,14 +1,7 @@
 {
-  "singleQuote": true,
-  "trailingComma": "all",
   "bracketSpacing": false,
-  "jsxBracketSameLine": true,
-  "parser": "babylon",
-  "semi": true,
-  "arrowParens": "avoid",
-  "htmlWhitespaceSensitivity": "css",
   "jsxSingleQuote": true,
-  "printWidth": 80,
-  "proseWrap": "preserve",
-  "tabWidth": 2
+  "parser": "babylon",
+  "singleQuote": true,
+  "trailingComma": "all"
 }
