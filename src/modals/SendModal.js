@@ -64,16 +64,12 @@ class SendModal extends React.PureComponent {
 
   onReceipientAddressChange = event => {
     const target = event.target.value;
-    this.setState(({recipientAddress}) => ({
-      recipientAddress: target,
-    }));
+    this.setState({recipientAddress: target});
   };
 
   onReceipientAmountChange = event => {
     const target = event.target.value;
-    this.setState(({recipientAmount}) => ({
-      recipientAmount: target,
-    }));
+    this.setState({recipientAmount: target});
   };
 
   render() {
