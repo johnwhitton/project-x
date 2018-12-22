@@ -19,6 +19,7 @@ TODO
 
  * JavaScript
  * NodeJS/Express
+ * 0x
  * React
  * Solidity
  * Web3
