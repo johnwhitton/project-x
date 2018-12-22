@@ -35,7 +35,9 @@ git clone https://github.com/cowri/project-x.git
 
 #### Project dependencies
 
-[Install MetaMask Chrome Extension](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
+Install MetaMask Chrome Extension:
+> MetaMask is an extension for accessing Ethereum enabled Dapps in Chrome:
+[MetaMask Chrome Extension](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn "MetaMask Chrome Extension]")
 
 Install project dependencies:
 ```sh
