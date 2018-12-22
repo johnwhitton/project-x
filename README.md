@@ -2,7 +2,7 @@
 ## What is project-x
  > stablecoin shell manager
  
- ![project-x Demo](./project-x.gif "project-x Demo gif")
+ ![project-x Demo](./project-x.png "project-x Demo png")
  
 ## Table of Contents
 
