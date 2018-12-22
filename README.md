@@ -1,6 +1,6 @@
 # project-x
 ## What is project-x?
- > stablecoin shell manager
+ > stablecoin shell protocol
  
  ![project-x Demo](./project-x.png "project-x Demo png")
  
