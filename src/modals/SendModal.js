@@ -73,7 +73,7 @@ class SendModal extends React.PureComponent {
   };
 
   render() {
-    const {loading} = this.state;
+    const {loading, recipientAddress} = this.state;
     const {closeModal} = this.props;
     return (
       <div className='modal-backdrop'>
@@ -82,7 +82,11 @@ class SendModal extends React.PureComponent {
             {/* TODO: support multiple screen resolutions */}
             {loading && (
               <div className='loading-overlay'>
-                <img className='loading-spinner' src={loader} />
+                <img
+                  alt='loading spinner'
+                  className='loading-spinner'
+                  src={loader}
+                />
               </div>
             )}
             <div className='send-modal-form-container'>
@@ -105,7 +109,7 @@ class SendModal extends React.PureComponent {
                   onChange={this.onReceipientAddressChange}
                   placeholder='0x...'
                   type='text'
-                  value={this.state.recipientAddress}
+                  value={recipientAddress}
                 />
               </div>
               <div className='send-modal-input amount-input'>
