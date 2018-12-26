@@ -18,7 +18,7 @@ TODO
 ## Technology Stack
 
  * JavaScript
- * NodeJS/Express
+ * NodeJS
  * 0x
  * React
  * Solidity
