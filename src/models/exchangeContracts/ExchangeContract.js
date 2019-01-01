@@ -1,4 +1,5 @@
 export class ExchangeContract {
+
   constructor() {
     this.ExchangeAddress = '';
     if (new.target === ExchangeContract) {
@@ -7,4 +8,5 @@ export class ExchangeContract {
       );
     }
   }
+
 }

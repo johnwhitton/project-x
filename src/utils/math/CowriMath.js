@@ -1,4 +1,5 @@
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
+import { BigNumber as ZeroExBigNumber } from '0x.js';
 
 export default class CowriMath {
   static plus = (num1, num2) => {
@@ -24,7 +25,12 @@ export default class CowriMath {
   static pow = (base, exponent) => {
     const bigNum1 = new BigNumber(base);
     return +bigNum1.exponentiatedBy(exponent);
-  };
+  }
+
+  static bigNumber = (number) => {
+    return new ZeroExBigNumber(number);
+  }
+
 }
 
 export const ZERO = new BigNumber(0);

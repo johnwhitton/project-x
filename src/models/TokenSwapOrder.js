@@ -9,32 +9,29 @@ import {
 
 export class TokenSwapOrder {
   constructor(senderToken, senderCowriUser, receiverToken, receiverCowriUser) {
-    this._expirationTimeInSeconds = ExpirationTimeInSeconds;
+    this.expirationTimeInSeconds = ExpirationTimeInSeconds;
     this.senderToken = senderToken;
     this.senderCowriUser = senderCowriUser;
     this.receiverToken = receiverToken;
     this.receiverCowriUser = receiverCowriUser;
   }
 
-  generateOrder = () => ({
-    exchangeAddress: ZeroExExchangeAddress,
-    makerAddress: this.senderCowriUser.address,
-    takerAddress: this.receiverCowriUser.address,
-    senderAddress: '',
-    feeRecipientAddress: '',
-    expirationTimeSeconds: ExpirationTimeInSeconds,
-    salt: generateRandom256Salt(),
-    makerAssetAmount: convertValueToTokenDecimals(
-      this.senderToken.balance,
-      this.senderToken.decimals,
-    ),
-    takerAssetAmount: convertValueToTokenDecimals(
-      this.receiverToken.balance,
-      this.receiverToken.decimals,
-    ),
-    makerAssetData: encodeERC20AssetData(this.senderToken.address),
-    takerAssetData: encodeERC20AssetData(this.receiverToken.address),
-    makerFee: ZERO,
-    takerFee: ZERO,
-  });
+  generateOrder = () => {
+
+    return {
+      exchangeAddress: ZeroExExchangeAddress,
+      makerAddress: this.senderCowriUser.address.toLowerCase(),
+      takerAddress: this.receiverCowriUser.address.toLowerCase(),
+      senderAddress: this.senderCowriUser.address.toLowerCase(),
+      feeRecipientAddress: this.receiverCowriUser.address.toLowerCase(),
+      expirationTimeSeconds: '' + ExpirationTimeInSeconds,
+      salt: generateRandom256Salt(),
+      makerAssetAmount: '' + convertValueToTokenDecimals(this.senderToken.balance, this.senderToken.decimals),
+      takerAssetAmount: '' + convertValueToTokenDecimals(this.receiverToken.balance, this.receiverToken.decimals),
+      makerAssetData: encodeERC20AssetData(this.senderToken.address),
+      takerAssetData: encodeERC20AssetData(this.receiverToken.address),
+      makerFee: ZERO,
+      takerFee: ZERO
+    }
+  }
 }
