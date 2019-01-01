@@ -11,12 +11,12 @@ class Account extends React.Component {
   };
 
   setViewMode = view => {
-    this.setState({ view: view });
+    this.setState({view});
   };
 
   render() {
-    const view = this.state.view;
-    const { account, web3, toggleReceiveModal, toggleSendModal } = this.props;
+    const {view} = this.state;
+    const {account, web3, toggleReceiveModal, toggleSendModal} = this.props;
     return (
       <div className='account-container'>
         <div className='account-top'>

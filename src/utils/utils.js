@@ -1,5 +1,5 @@
+import {assetDataUtils, generatePseudoRandomSalt} from '0x.js';
 import CowriMath from './math/CowriMath';
-import {assetDataUtils, generatePseudoRandomSalt} from '0x.js'
 
 /**
  * Converts token value to proper decimal places
@@ -27,14 +27,21 @@ const convertValueFromTokenDecimals = (value, decimals) =>
  * @returns {number}
  */
 const getTokenToCowriRatio = (balance, cowriBalance, cowriToSend) =>
-  (balance / cowriBalance) *  cowriToSend;
+  (balance / cowriBalance) * cowriToSend;
 
-const generateRandom256Salt = () => {
-  return generatePseudoRandomSalt();
-}
+const generateRandom256Salt = () => generatePseudoRandomSalt();
 
 const getFutureExpiration = () => {
   return CowriMath.bigNumber(Date.now() + 600000).ceil();
 }
 
-export { convertValueToTokenDecimals, convertValueFromTokenDecimals, getTokenToCowriRatio, generateRandom256Salt, getFutureExpiration};
+const encodeERC20AssetData = erc20TokenAddress =>
+  assetDataUtils.encodeERC20AssetData(erc20TokenAddress);
+export {
+  convertValueToTokenDecimals,
+  convertValueFromTokenDecimals,
+  getTokenToCowriRatio,
+  generateRandom256Salt,
+  encodeERC20AssetData,
+  getFutureExpiration
+};

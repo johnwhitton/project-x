@@ -1,6 +1,7 @@
+import React, {Fragment} from 'react';
+import QRCode from 'qrcode';
 import BaseContainer from './BaseContainer';
 import BaseHeader from './BaseHeader';
-import React, { Fragment } from 'react';
 import ReceiveModal from '../modals/ReceiveModal';
 import SendModal from '../modals/SendModal';
 import web3 from '../web3';
@@ -11,30 +12,29 @@ class App extends React.PureComponent {
     connected: false,
     isSendModalVisible: false,
     isReceiveModalVisible: false,
+    qr: '',
   };
 
   async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
+    const qrURI = await QRCode.toDataURL(accounts[0]);
     if (accounts.length > 0) {
       this.setState({
         account: accounts[0],
         connected: true,
+        qr: qrURI,
       });
     } else {
-      this.setState({ connected: false });
+      this.setState({connected: false});
     }
   }
 
-  _toggleSendModal = visible => {
-    this.setState(({ isSendModalVisible }) => ({
-      isSendModalVisible: visible,
-    }));
+  toggleSendModal = visible => {
+    this.setState({isSendModalVisible: visible});
   };
 
-  _toggleReceiveModal = visible => {
-    this.setState(({ isReceiveModalVisible }) => ({
-      isReceiveModalVisible: visible,
-    }));
+  toggleReceiveModal = visible => {
+    this.setState({isReceiveModalVisible: visible});
   };
 
   render() {
@@ -43,6 +43,7 @@ class App extends React.PureComponent {
       connected,
       isReceiveModalVisible,
       isSendModalVisible,
+      qr,
     } = this.state;
     return (
       <Fragment>
@@ -51,14 +52,24 @@ class App extends React.PureComponent {
           <BaseContainer
             account={account}
             connectionStatus={connected}
-            toggleReceiveModal={this._toggleReceiveModal}
-            toggleSendModal={this._toggleSendModal}
+            toggleReceiveModal={this.toggleReceiveModal}
+            toggleSendModal={this.toggleSendModal}
             web3={web3}
           />
         </div>
-        {isSendModalVisible && <SendModal closeModal={this._toggleSendModal} />}
+        {isSendModalVisible && (
+          <SendModal
+            account={account}
+            closeModal={this.toggleSendModal}
+            web3={web3}
+          />
+        )}
         {isReceiveModalVisible && (
-          <ReceiveModal closeModal={this._toggleReceiveModal} />
+          <ReceiveModal
+            account={account}
+            closeModal={this.toggleReceiveModal}
+            qr={qr}
+          />
         )}
       </Fragment>
     );

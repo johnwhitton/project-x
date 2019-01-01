@@ -1,10 +1,13 @@
 import {Token} from './Token';
 import {ExpirationTimeInSeconds, ZeroExExchangeAddress} from './Constants';
 import {ZERO} from '../utils/math/CowriMath';
-import {convertValueToTokenDecimals, generateRandom256Salt, encodeERC20AssetData} from '../utils/utils';
+import {
+  convertValueToTokenDecimals,
+  generateRandom256Salt,
+  encodeERC20AssetData,
+} from '../utils/utils';
 
 export class TokenSwapOrder {
-
   constructor(senderToken, senderCowriUser, receiverToken, receiverCowriUser) {
     this.expirationTimeInSeconds = ExpirationTimeInSeconds;
     this.senderToken = senderToken;
@@ -30,7 +33,5 @@ export class TokenSwapOrder {
       makerFee: ZERO,
       takerFee: ZERO
     }
-
   }
-
 }
