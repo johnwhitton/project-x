@@ -1,7 +1,7 @@
 export class ContractWrappers {
 
   constructor() {
-    if(this === ContractWrappers) {
+    if(new.target === ContractWrappers) {
       throw new TypeError('Cannot instantiate abstract class ContractWrappers');
     }
   }

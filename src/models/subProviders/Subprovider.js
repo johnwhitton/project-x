@@ -1,7 +1,7 @@
 export class Subprovider {
 
   constructor() {
-    if(this === Subprovider) {
+    if(new.target === Subprovider) {
       throw new TypeError('Abstract class Provider cannot be instantiated directly');
     }
   }

@@ -1,6 +1,6 @@
 export class Provider {
   constructor() {
-    if(this === Provider) {
+    if(new.target === Provider) {
       throw new TypeError('Cannot instantiate abstract class Provider');
     }
   }

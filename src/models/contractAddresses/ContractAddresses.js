@@ -1,6 +1,7 @@
 export class ContractAddresses {
+
   constructor() {
-    if(this === ContractAddresses) {
+    if(new.target === ContractAddresses) {
       throw new TypeError('Cannot instantiate abstract class ContractAddresses');
     }
   }
@@ -8,4 +9,5 @@ export class ContractAddresses {
   getContractAddressesForNetworkOrThrow = () => {
     throw new Error("getContractAddressesForNetworkOrThrow must be calledin subclass");
   }
+
 }
