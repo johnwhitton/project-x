@@ -17,7 +17,6 @@ export class TokenSwapOrder {
   }
 
   generateOrder = () => {
-
     return {
       exchangeAddress: ZeroExExchangeAddress,
       makerAddress: this.senderCowriUser.address.toLowerCase(),
@@ -26,12 +25,22 @@ export class TokenSwapOrder {
       feeRecipientAddress: this.receiverCowriUser.address.toLowerCase(),
       expirationTimeSeconds: '' + ExpirationTimeInSeconds,
       salt: generateRandom256Salt(),
-      makerAssetAmount: '' + convertValueToTokenDecimals(this.senderToken.balance, this.senderToken.decimals),
-      takerAssetAmount: '' + convertValueToTokenDecimals(this.receiverToken.balance, this.receiverToken.decimals),
+      makerAssetAmount:
+        '' +
+        convertValueToTokenDecimals(
+          this.senderToken.balance,
+          this.senderToken.decimals,
+        ),
+      takerAssetAmount:
+        '' +
+        convertValueToTokenDecimals(
+          this.receiverToken.balance,
+          this.receiverToken.decimals,
+        ),
       makerAssetData: encodeERC20AssetData(this.senderToken.address),
       takerAssetData: encodeERC20AssetData(this.receiverToken.address),
       makerFee: ZERO,
-      takerFee: ZERO
-    }
-  }
+      takerFee: ZERO,
+    };
+  };
 }
