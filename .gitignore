@@ -21,3 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .vscode
+
+# 0x ganache snapshot
+/0x_ganache_snapshot
