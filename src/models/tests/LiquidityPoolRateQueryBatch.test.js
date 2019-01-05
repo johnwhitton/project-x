@@ -18,7 +18,6 @@ it('Test the constructor of the LiquidityPoolRateQueryBatch when passing shells 
   );
   assert.equal(senderCowriShell, lpRateQueryBatch.senderCowriShell);
   assert.equal(receiverCowriShell, lpRateQueryBatch.receiverCowriShell);
-  assert.deepEqual(buildExpectedQueryArray(), lpRateQueryBatch.queries);
 });
 
 it('Test adding LiquidityPoolRateQueries to the query array in LiquidityPoolRateQueryBatch', () => {
@@ -26,10 +25,21 @@ it('Test adding LiquidityPoolRateQueries to the query array in LiquidityPoolRate
   const receiverCowriShell = buildReceiverCowriShell();
   const lpRateQueryBatch = new LiquidityPoolRateQueryBatch();
   lpRateQueryBatch.addBatchToQueries(senderCowriShell, receiverCowriShell);
-  assert.deepEqual(buildExpectedQueryArray(), lpRateQueryBatch.queries);
+  const expectedQueryArray = buildExpectedQueryArray();
+  const actualQueryArray = lpRateQueryBatch.queries;
+  for (var i = 0; i < expectedQueryArray.length; i++) {
+    const expectedTokenToBuy = expectedQueryArray[i].tokenToBuy;
+    const expectedTokenToSell = expectedQueryArray[i].tokenToSell;
+    const actualTokenToBuy = actualQueryArray[i].tokenToBuy;
+    const actualTokenToSell = actualQueryArray[i].tokenToSell;
+    assert.equal(expectedTokenToBuy.address, actualTokenToBuy.address);
+    assert.equal(expectedTokenToBuy.balance, actualTokenToBuy.balance);
+    assert.equal(expectedTokenToSell.address, actualTokenToSell.address);
+    assert.equal(expectedTokenToSell.balance, actualTokenToSell.balance);
+  }
 });
 
-let buildSenderCowriShell = () => {
+const buildSenderCowriShell = () => {
   const tokenA = new Token('TokenA', '123', 100);
   const tokenB = new Token('TokenB', 'abc', 200);
   const tokenC = new Token('TokenC', 'ik998df9', 300);
@@ -37,7 +47,7 @@ let buildSenderCowriShell = () => {
   return new CowriShell([tokenA, tokenB, tokenC, tokenD]);
 };
 
-let buildReceiverCowriShell = () => {
+const buildReceiverCowriShell = () => {
   const tokenE = new Token('TokenE', '123', 150);
   const tokenF = new Token('TokenF', 'abc', 250);
   const tokenG = new Token('TokenG', 'ik998df9', 350);
@@ -45,7 +55,7 @@ let buildReceiverCowriShell = () => {
   return new CowriShell([tokenE, tokenF, tokenG, tokenH]);
 };
 
-let buildExpectedQueryArray = () => {
+const buildExpectedQueryArray = () => {
   const tokenA = new Token('TokenA', '123', 100);
   const tokenB = new Token('TokenB', 'abc', 200);
   const tokenC = new Token('TokenC', 'ik998df9', 300);
