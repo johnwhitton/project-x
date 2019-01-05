@@ -5,8 +5,8 @@ import {CowriShell} from '../CowriShell';
 import {CowriUser} from '../CowriUser';
 
 it('Test the TokenSwapOrder constructor', () => {
-  const senderToken = buildSenderToken();
-  const receiverToken = buildReceiverToken();
+  const senderToken = new Token('senderToken', 'senderTokenAddress', 15);
+  const receiverToken = new Token('receiverToken', 'receiverTokenAddress', 20);
   const senderCowriShell = new CowriShell([senderToken]);
   const receiverCowriShell = new CowriShell([receiverToken]);
   const senderCowriUser = new CowriUser('senderUserAddress', senderCowriShell);
@@ -20,10 +20,5 @@ it('Test the TokenSwapOrder constructor', () => {
     receiverToken,
     receiverCowriUser,
   );
-  console.log(testTokenSwapOrder.generateOrder());
+  assert.isOk(testTokenSwapOrder);
 });
-
-let buildSenderToken = () => new Token('senderToken', 'senderTokenAddress', 15);
-
-let buildReceiverToken = () =>
-  new Token('receiverToken', 'receiverTokenAddress', 20);
