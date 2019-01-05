@@ -33,6 +33,16 @@ export class ZeroExERC20ContractWrapper extends ContractWrappers {
     );
   };
 
+  fillOrderAsync = async (signedOrder, takerAssetAmount, taker, config) => {
+    const txHash = await this.zeroExContractWrapper.exchange.fillOrderAsync(
+      signedOrder,
+      takerAssetAmount,
+      taker,
+      config,
+    );
+    return txHash;
+  };
+
   depositEtherAsync = async (tokenAddress, assetAmount, userAddress) => {
     const depositTxHash = await this.zeroExContractWrapper.etherToken.depositAsync(
       tokenAddress,
