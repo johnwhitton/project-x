@@ -51,4 +51,13 @@ export class ZeroExERC20ContractWrapper extends ContractWrappers {
     );
     return depositTxHash;
   };
+
+  getBalanceAsync = async (cowriUser, token) => {
+    const ownerAddress = cowriUser.address;
+    const tokenAddress = token.address;
+    return await this.zeroExContractWrapper.erc20Token.getBalanceAsync(
+      tokenAddress,
+      ownerAddress,
+    );
+  };
 }

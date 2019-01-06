@@ -5,6 +5,8 @@ import {BigNumber} from '0x.js';
 import {Web3ProviderEngine} from '../../providerEngine/Web3ProviderEngine';
 import {ZERO, GANACHE_NETWORK_ID, RPC_URL} from '../../Constants';
 import {RPCSubprovider} from '../../subProviders/RPCSubprovider';
+import {Token} from '../../Token';
+import {CowriUser} from '../../CowriUser';
 
 it('Test the ZeroExERC20ContractWrapper constructor without passing arguments', () => {
   assert.throw(() => new ZeroExERC20ContractWrapper());
@@ -42,6 +44,22 @@ it('Test setUnlimitedProxyAllowanceAsync', async () => {
 
 it('Test validateFillOrderThrowIfInvalidAsync', () => {
   assert.fail('Figure out a good way to test this.');
+});
+
+it('Test getBalanceAsync', async () => {
+  const tokenAddress = '0x0b1ba0af832d7c05fd64161e0db78e85978e8082';
+  const tokenName = 'etherToken';
+  const userAddress = '0x5409ed021d9299bf6814279a6a1411a7e866a631';
+  const token = new Token(tokenName, tokenAddress);
+  const cowriUser = new CowriUser(userAddress, null);
+  const providerEngine = new Web3ProviderEngine();
+  providerEngine.addProvider(new RPCSubprovider(RPC_URL).getSubprovider());
+  providerEngine.start();
+  const contractWrappers = new ZeroExERC20ContractWrapper(
+    providerEngine.getEngine(),
+    {networkId: GANACHE_NETWORK_ID},
+  );
+  assert.isOk(await contractWrappers.getBalanceAsync(cowriUser, token));
 });
 
 it('Test depositEtherAsync', async () => {
