@@ -33,15 +33,16 @@ const generateRandom256Salt = () => generatePseudoRandomSalt();
 
 const getFutureExpiration = () => {
   return CowriMath.bigNumber(Date.now() + 600000).ceil();
-}
+};
 
 const encodeERC20AssetData = erc20TokenAddress =>
   assetDataUtils.encodeERC20AssetData(erc20TokenAddress);
+
 export {
   convertValueToTokenDecimals,
   convertValueFromTokenDecimals,
   getTokenToCowriRatio,
   generateRandom256Salt,
   encodeERC20AssetData,
-  getFutureExpiration
+  getFutureExpiration,
 };

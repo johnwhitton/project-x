@@ -1,4 +1,5 @@
-export const ZeroExExchangeAddress = '0x90fe2af704b34e0224bf2299c838e04d4dcf1364';
+export const ZeroExExchangeAddress =
+  '0x48bacb9266a570d521063ef5dd96e61686dbe788';
 export const ExpirationTimeInSeconds = '' + (Date.now() + 3600000);
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const DECIMALS = 18;

@@ -1,5 +1,6 @@
+import {assert} from 'chai';
 import {RPCSubprovider} from '../subProviders/RPCSubprovider';
-import {encodeERC20AssetData} from '../../utils/AssetDataUtils';
+import {encodeERC20AssetData} from '../../utils/utils';
 import {
   NULL_ADDRESS,
   DECIMALS,
@@ -89,6 +90,7 @@ it('Test the end-to-end process of making a transaction', async () => {
     maker,
   );
   const signedOrder = {...order, signature};
+  console.log(signedOrder);
 
   await contractWrappers.validateFillOrderThrowIfInvalidAsync(
     signedOrder,
@@ -103,6 +105,5 @@ it('Test the end-to-end process of making a transaction', async () => {
     {gasLimit: 10000000},
   );
   await web3Wrapper.awaitTransactionSuccessAsync(txHash);
-  console.log('Did it freaking finish? Jeez');
-  console.log(txHash);
+  assert.isOk(txHash);
 });
