@@ -17,8 +17,8 @@ class App extends React.PureComponent {
 
   async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
-    const qrURI = await QRCode.toDataURL(accounts[0]);
     if (accounts.length > 0) {
+      const qrURI = await QRCode.toDataURL(accounts[0]);
       this.setState({
         account: accounts[0],
         connected: true,

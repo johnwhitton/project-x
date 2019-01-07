@@ -102,9 +102,11 @@ class AccountBalances extends React.Component {
         const contractBalance = await tokenContract.methods
           .balanceOf(localAccounts[0])
           .call();
-        const asset = await tokenContract.methods.name().call();
-        const symbol = await tokenContract.methods.symbol().call();
-        const decimals = await tokenContract.methods.decimals().call();
+        const [asset, decimals, symbol] = await Promise.all([
+          tokenContract.methods.name().call(),
+          tokenContract.methods.decimals().call(),
+          tokenContract.methods.symbol().call(),
+        ]);
         const quantity = convertValueFromTokenDecimals(
           contractBalance,
           decimals,
