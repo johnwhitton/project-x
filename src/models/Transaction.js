@@ -1,7 +1,7 @@
 import {CowriShell} from './CowriShell';
 import CowriMath from '../utils/math/CowriMath';
 
-export class Transaction {
+class Transaction {
   constructor(senderCowriUser, receiverCowriUser, amount) {
     this.senderCowriShell = senderCowriUser.cowriShell;
     this.receiverCowriShell = receiverCowriUser.cowriShell;
@@ -9,7 +9,9 @@ export class Transaction {
     this.receiverCowriUser = receiverCowriUser;
     this.amount = amount;
     if (!this.isTotalBalanceEnoughToCoverTX()) {
-      throw "Sender balance isn't enough to cover transaction amount";
+      throw new Error(
+        "Sender balance isn't enough to cover transaction amount",
+      );
     }
   }
 
@@ -68,7 +70,7 @@ export class Transaction {
   ) => {
     epsilon = epsilon.filter(eps => this.isTotalBalanceEnoughToCoverTX(eps));
     if (epsilon.length === 0) {
-      throw 'Every epsilon puts the cost over the balance';
+      throw new Error('Every epsilon puts the cost over the balance');
     }
 
     const senderTokens = this.senderCowriShell.getSortedTokenArray();
@@ -129,3 +131,5 @@ export class Transaction {
     }
   };
 }
+
+export default Transaction;
