@@ -102,6 +102,5 @@ export class TokenSwapOrder extends Order {
       {gasLimit: 10000000},
     );
     await this.web3Wrapper.awaitTransactionSuccessAsync(txHash);
-    console.log(txHash);
   };
 }

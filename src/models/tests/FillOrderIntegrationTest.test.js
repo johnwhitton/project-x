@@ -15,6 +15,7 @@ import {ZeroExContractAddresses} from '../contractAddresses/ZeroExContractAddres
 import {Web3Provider} from '../providers/Web3Provider';
 import {getOrderHashHex} from '../../utils/OrderHashUtils';
 import {ecSignHashAsync} from '../../utils/SignatureUtils';
+import {Token} from '../Token';
 
 it('Test the end-to-end process of making a transaction', async () => {
   const providerEngine = new Web3ProviderEngine();
@@ -35,8 +36,8 @@ it('Test the end-to-end process of making a transaction', async () => {
   const zrxTokenAddress = contractAddresses.zrxToken;
   const etherTokenAddress = contractAddresses.etherToken;
 
-  const makerAssetData = encodeERC20AssetData(zrxTokenAddress);
-  const takerAssetData = encodeERC20AssetData(etherTokenAddress);
+  const zrxToken = new Token('zrxToken', zrxTokenAddress, 5);
+  const etherToken = new Token('etherToken', etherTokenAddress, 0.1);
 
   // the amount the maker is selling of maker asset
   const makerAssetAmount = web3Wrapper.toBaseUnitAmount(5, DECIMALS);
@@ -56,8 +57,7 @@ it('Test the end-to-end process of making a transaction', async () => {
   await web3Wrapper.awaitTransactionSuccessAsync(takerWETHApprovalTxHash);
 
   const takerWETHDepositTxHash = await contractWrappers.depositEtherAsync(
-    etherTokenAddress,
-    takerAssetAmount,
+    etherToken,
     taker,
   );
 
@@ -74,10 +74,10 @@ it('Test the end-to-end process of making a transaction', async () => {
     feeRecipientAddress: NULL_ADDRESS,
     expirationTimeSeconds: randomExpiration,
     salt: generateRandom256Salt(),
-    makerAssetAmount,
-    takerAssetAmount,
-    makerAssetData,
-    takerAssetData,
+    makerAssetAmount: zrxToken.toBaseUnitAmount(),
+    takerAssetAmount: etherToken.toBaseUnitAmount(),
+    makerAssetData: zrxToken.getEncodedTokenData(),
+    takerAssetData: etherToken.getEncodedTokenData(),
     makerFee: '0',
     takerFee: '0',
   };

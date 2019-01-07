@@ -1,6 +1,7 @@
 import {ContractWrappers} from './ContractWrappers';
 import {ContractWrappers as ZeroExContractWrappers} from '0x.js';
 import {ProviderEngine} from '../providerEngine/ProviderEngine';
+import {Token} from '../Token';
 
 export class ZeroExERC20ContractWrapper extends ContractWrappers {
   constructor(providerEngine, config) {
@@ -33,20 +34,25 @@ export class ZeroExERC20ContractWrapper extends ContractWrappers {
     );
   };
 
-  fillOrderAsync = async (signedOrder, takerAssetAmount, taker, config) => {
+  fillOrderAsync = async (
+    signedOrder,
+    takerAssetAmount,
+    takerAddress,
+    config,
+  ) => {
     const txHash = await this.zeroExContractWrapper.exchange.fillOrderAsync(
       signedOrder,
       takerAssetAmount,
-      taker,
+      takerAddress,
       config,
     );
     return txHash;
   };
 
-  depositEtherAsync = async (tokenAddress, assetAmount, userAddress) => {
+  depositEtherAsync = async (etherToken, userAddress) => {
     const depositTxHash = await this.zeroExContractWrapper.etherToken.depositAsync(
-      tokenAddress,
-      assetAmount,
+      etherToken.address,
+      etherToken.toBaseUnitAmount(),
       userAddress,
     );
     return depositTxHash;

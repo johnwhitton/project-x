@@ -13,7 +13,7 @@ it('Test the TokenSwapOrder constructor', async () => {
   const zrxToken = new Token(zrxTokenName, zrxTokenAddress, 5);
   const etherToken = new Token(etherTokenName, etherTokenAddress, 0.1);
   const senderCowriUser = new CowriUser(senderAddress, null);
-  const receiverCowriUser = new CowriUser(senderAddress, null);
+  const receiverCowriUser = new CowriUser(receiverAddress, null);
   const tokenSwapOrder = new TokenSwapOrder(
     senderCowriUser,
     zrxToken,
