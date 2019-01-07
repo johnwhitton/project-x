@@ -29,7 +29,9 @@ class Account extends React.Component {
           </div>
         </div>
         <div className='account-bottom'>
-          {view === 'balances' && <AccountBalances web3={web3} />}
+          {view === 'balances' && (
+            <AccountBalances account={account} web3={web3} />
+          )}
           {view === 'shell' && <ManageShell />}
         </div>
       </div>

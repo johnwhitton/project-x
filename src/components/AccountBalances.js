@@ -65,11 +65,14 @@ class AccountBalances extends React.Component {
   };
 
   /**
-   * set user shell
+   * set user default shell
    */
   setDefaultShellMap = async () => {
+    const {account} = this.props;
     const {defaultShellMap, shellMappingContract} = this.state;
-    await shellMappingContract.methods.modifyShell(defaultShellMap).call();
+    await shellMappingContract.methods
+      .modifyShell(defaultShellMap)
+      .send({from: account});
   };
 
   /**
