@@ -13,11 +13,19 @@ class AccountBalances extends React.Component {
   ];
 
   state = {
-    cowriToken: {},
-    shellMappingContract: {},
     cowriShellMap: [],
+    cowriToken: {},
+    defaultShellMap: [
+      '0x802804f1eb96fcf3802fcedf6648f55ddae95208',
+      '0xad31da2bfd3113394745954445359caacb54bfef',
+      '0x4a110a6b35cfc6d9a3aa485e74c5d013916b7cd1',
+      '0xd152f7251cb9d4ee131c2660e4b83b570841864c',
+      '0x79a2f3bdee4722dbb813d4a22b4dfcaf73c91d2f',
+      '0xafb54039ca6b5a87a1dc7837dbd5fcf0bb24da06',
+    ],
     localShell: [],
     maxShellSize: 0,
+    shellMappingContract: {},
   };
 
   // TODO: load shell mapping contract address from DB
@@ -54,6 +62,14 @@ class AccountBalances extends React.Component {
       .maxShellSize()
       .call();
     this.setState({maxShellSize: Number(maxShellSize)});
+  };
+
+  /**
+   * set user shell
+   */
+  setDefaultShellMap = async () => {
+    const {defaultShellMap, shellMappingContract} = this.state;
+    shellMappingContract.methods.modifyShell(defaultShellMap).call();
   };
 
   /**
