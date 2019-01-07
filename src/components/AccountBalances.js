@@ -69,7 +69,7 @@ class AccountBalances extends React.Component {
    */
   setDefaultShellMap = async () => {
     const {defaultShellMap, shellMappingContract} = this.state;
-    shellMappingContract.methods.modifyShell(defaultShellMap).call();
+    await shellMappingContract.methods.modifyShell(defaultShellMap).call();
   };
 
   /**
