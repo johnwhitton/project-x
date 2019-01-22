@@ -6,10 +6,10 @@ import {encodeERC20AssetData} from '../utils/utils';
 import CowriMath from '../utils/math/CowriMath';
 
 export class Token {
-  constructor(tokenName, tokenAddress, balance = 0, decimals = 18) {
+  constructor(tokenName, tokenAddress, balanceInWei = 0, decimals = 18) {
     this.name = tokenName;
     this.address = tokenAddress;
-    this.balance = balance;
+    this.balance = balanceInWei;
     this.decimals = decimals;
   }
 

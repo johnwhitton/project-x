@@ -1,7 +1,7 @@
 import {CowriShell} from './CowriShell';
 import CowriMath from '../utils/math/CowriMath';
 
-class Transaction {
+export class Transaction {
   constructor(senderCowriUser, receiverCowriUser, amount) {
     this.senderCowriShell = senderCowriUser.cowriShell;
     this.receiverCowriShell = receiverCowriUser.cowriShell;
@@ -131,5 +131,3 @@ class Transaction {
     }
   };
 }
-
-export default Transaction;
