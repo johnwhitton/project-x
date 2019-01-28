@@ -15,6 +15,7 @@ import {
 } from '0x.js';
 import {getFutureExpiration} from '../../utils/utils';
 import {getContractAddressesForNetworkOrThrow} from '@0x/contract-addresses';
+import {Web3Wrapper} from '@0x/web3-wrapper';
 
 import {NULL_ADDRESS} from '../Constants';
 
@@ -22,16 +23,13 @@ export class CowriProvider extends Provider {
   constructor() {
     super();
     const Web3 = require('web3');
-    this.web3 = new Web3(
-      'https://kovan.infura.io/v3/0560979f59e84ebda0c61449fc42d35d',
-    );
+    this.web3 = new Web3('http://localhost:8545');
     this.providerEngine = new Web3ProviderEngine();
     this.providerEngine.addProvider(
-      new RPCSubprovider(
-        'https://kovan.infura.io/v3/0560979f59e84ebda0c61449fc42d35d',
-      ),
+      new RPCSubprovider('http://localhost:8545'),
     );
     this.providerEngine.start();
+    this.web3Wrapper = new Web3Wrapper(this.providerEngine);
     this.contractWrappers = new ContractWrappers(this.providerEngine, {
       networkId: 42,
     });
@@ -55,7 +53,8 @@ export class CowriProvider extends Provider {
       kovanNetworkID,
     );
     const exchangeAddress = contractAddresses.exchange;
-    console.log('exchange address: ' + exchangeAddress);
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000000;
+
     const order = {
       exchangeAddress,
       makerAddress: senderAddress,
@@ -71,18 +70,16 @@ export class CowriProvider extends Provider {
       makerFee: '0',
       takerFee: '0',
     };
-    const orderHashHex = orderHashUtils.getOrderHashHex(order);
-    const signature = await this.signOrder(
-      orderHashHex,
-      '0x2991B7A593FB156520D62E35D611F960DED3AA1ED0600DA4AE26B4091A4EF11D'.toLowerCase(),
+    const signedOrder = await this.signOrder(order, senderAddress);
+    console.log('validating order fillable');
+    await this.contractWrappers.exchange.validateOrderFillableOrThrowAsync(
+      signedOrder,
     );
-    const signedOrder = {...order, signature};
-    console.log(signedOrder);
     return signedOrder;
   };
 
   fillSwap = async (signedOrder, takerAddress, takerAssetAmount) => {
-    txHash = await this.contractWrappers.exchange.fillOrderAsync(
+    let txHash = await this.contractWrappers.exchange.fillOrderAsync(
       signedOrder,
       new BigNumber(takerAssetAmount),
       takerAddress,
@@ -90,12 +87,20 @@ export class CowriProvider extends Provider {
         gasLimit: 100000,
       },
     );
+    console.log(txHash);
+    await this.web3Wrapper.awaitTransactionSuccessAsync(txHash);
+    console.log('Transaction success');
+    return txHash;
   };
 
   //Returns the signed order
-  signOrder = async (orderToSign, privateKeyUPDATETHIS) => {
-    return await this.web3.eth.accounts.sign(orderToSign, privateKeyUPDATETHIS)
-      .signature;
+  signOrder = async (orderToSign, makerAddress) => {
+    const signature = await signatureUtils.ecSignOrderAsync(
+      this.providerEngine,
+      orderToSign,
+      makerAddress,
+    );
+    return signature;
   };
 
   // Returns an object mapping the address of each token to their balance in wei
