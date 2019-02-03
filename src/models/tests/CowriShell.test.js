@@ -42,10 +42,20 @@ it('Test getting the sorted token array', () => {
   const tokenC = new Token('Stablecoin C', 'CAddress', 300);
   const expectedSortedTokenArray = [tokenA, tokenB, tokenC];
   const actualSortedTokenArray = cowriShell.getSortedTokenArray();
-  //because functions are references in javascript. DeepEqual will fail without these two lines
-  expectedSortedTokenArray.forEach(x => delete x.getEncodedTokenData);
-  actualSortedTokenArray.forEach(x => delete x.getEncodedTokenData);
-  assert.deepEqual(expectedSortedTokenArray, cowriShell.getSortedTokenArray());
+  for (let i = 0; i < cowriShell.getSortedTokenArray(); i++) {
+    assert.equal(
+      actualSortedTokenArray[i].address,
+      expectedSortedTokenArray[i].address,
+    );
+    assert.equal(
+      actualSortedTokenArray[i].name,
+      expectedSortedTokenArray[i].name,
+    );
+    assert.equal(
+      actualSortedTokenArray[i].balance,
+      expectedSortedTokenArray[i].balance,
+    );
+  }
 });
 
 let buildCowriShellA = () => {

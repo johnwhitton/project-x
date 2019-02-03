@@ -17,7 +17,7 @@ import {getOrderHashHex} from '../../utils/OrderHashUtils';
 import {ecSignHashAsync} from '../../utils/SignatureUtils';
 import {Token} from '../Token';
 
-it('Test the end-to-end process of making a transaction', async () => {
+/*it('Test the end-to-end process of making a transaction', async () => {
   const providerEngine = new Web3ProviderEngine();
   providerEngine.addProvider(new RPCSubprovider(RPC_URL).getSubprovider());
   providerEngine.start();
@@ -106,4 +106,4 @@ it('Test the end-to-end process of making a transaction', async () => {
   );
   await web3Wrapper.awaitTransactionSuccessAsync(txHash);
   assert.isOk(txHash);
-});
+});*/
