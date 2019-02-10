@@ -53,6 +53,7 @@ export class CowriProvider extends Provider {
       kovanNetworkID,
     );
     const exchangeAddress = contractAddresses.exchange;
+    console.log('exchange address: ' + exchangeAddress);
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000000;
 
     const order = {
@@ -67,14 +68,30 @@ export class CowriProvider extends Provider {
       takerAssetAmount: tokenToReceive.toBaseUnitAmount(),
       makerAssetData: tokenToSend.getEncodedTokenData(),
       takerAssetData: tokenToReceive.getEncodedTokenData(),
-      makerFee: '0',
-      takerFee: '0',
+      makerFee: new BigNumber(0),
+      takerFee: new BigNumber(0),
     };
+    console.log('maker approval hash');
+    const makerApprovalTxHash = await this.contractWrappers.erc20Token.setUnlimitedProxyAllowanceAsync(
+      tokenToSend.address,
+      senderAddress,
+    );
+    await this.web3Wrapper.awaitTransactionSuccessAsync(makerApprovalTxHash);
+    console.log('taker approval hash');
+    const takerApprovalTxHash = await this.contractWrappers.erc20Token.setUnlimitedProxyAllowanceAsync(
+      tokenToReceive.address,
+      receiverAddress,
+    );
+    await this.web3Wrapper.awaitTransactionSuccessAsync(takerApprovalTxHash);
+    console.log('give permission again');
+    await new Promise(resolve => setTimeout(resolve, 20000));
+    console.log('signing Order');
     const signedOrder = await this.signOrder(order, senderAddress);
     console.log('validating order fillable');
     await this.contractWrappers.exchange.validateOrderFillableOrThrowAsync(
       signedOrder,
     );
+
     return signedOrder;
   };
 
@@ -84,10 +101,10 @@ export class CowriProvider extends Provider {
       new BigNumber(takerAssetAmount),
       takerAddress,
       {
-        gasLimit: 100000,
+        gasLimit: 1000000,
       },
     );
-    console.log(txHash);
+    console.log('txHash: ' + txHash);
     await this.web3Wrapper.awaitTransactionSuccessAsync(txHash);
     console.log('Transaction success');
     return txHash;
