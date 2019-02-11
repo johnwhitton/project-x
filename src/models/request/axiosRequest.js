@@ -13,7 +13,10 @@ export default class AxiosRequest extends Request {
   };
 
   postAsync = (path, data, callback) => {
-    this.axios.post(path, data).then(response => {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    this.axios.post(path, data, {headers: headers}).then(response => {
       callback(response);
     });
   };

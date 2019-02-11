@@ -1,6 +1,8 @@
 import {Provider} from './Provider';
 import ABI from '../../ABI';
 import ShellABI from '../../ShellABI';
+import AxiosRequest from '../request/axiosRequest';
+import * as credentials from '../../../config/parityPassword.json';
 
 import {
   assetDataUtils,
@@ -33,6 +35,7 @@ export class CowriProvider extends Provider {
     this.contractWrappers = new ContractWrappers(this.providerEngine, {
       networkId: 42,
     });
+    this.request = new AxiosRequest();
   }
 
   sendToken = async (senderAddress, receiverAddress, token) => {
@@ -71,32 +74,52 @@ export class CowriProvider extends Provider {
       makerFee: new BigNumber(0),
       takerFee: new BigNumber(0),
     };
+    console.log('unlocking accounts');
+    await this.unlockAccount(senderAddress);
+    await this.unlockAccount(receiverAddress);
     console.log('maker approval hash');
     const makerApprovalTxHash = await this.contractWrappers.erc20Token.setUnlimitedProxyAllowanceAsync(
       tokenToSend.address,
       senderAddress,
     );
-    await this.web3Wrapper.awaitTransactionSuccessAsync(makerApprovalTxHash);
     console.log('taker approval hash');
     const takerApprovalTxHash = await this.contractWrappers.erc20Token.setUnlimitedProxyAllowanceAsync(
       tokenToReceive.address,
       receiverAddress,
     );
-    await this.web3Wrapper.awaitTransactionSuccessAsync(takerApprovalTxHash);
-    console.log('give permission again');
-    await new Promise(resolve => setTimeout(resolve, 20000));
+    await Promise.all([
+      this.web3Wrapper.awaitTransactionSuccessAsync(makerApprovalTxHash),
+      this.web3Wrapper.awaitTransactionSuccessAsync(takerApprovalTxHash),
+    ]);
+    console.log('unlocking accounts');
+    await this.unlockAccount(senderAddress);
+    await this.unlockAccount(receiverAddress);
     console.log('signing Order');
     const signedOrder = await this.signOrder(order, senderAddress);
     console.log('validating order fillable');
     await this.contractWrappers.exchange.validateOrderFillableOrThrowAsync(
       signedOrder,
     );
-
     return signedOrder;
   };
 
+  unlockAccount = async accountPublicKey => {
+    const params = [accountPublicKey, credentials.password, null];
+    const rawRequest = {
+      method: 'personal_unlockAccount',
+      params: params,
+      id: 1,
+      jsonrpc: '2.0',
+    };
+    await this.request.postAsync(
+      'http://localhost:8545',
+      JSON.stringify(rawRequest),
+      res => console.log('res' + res),
+    );
+  };
+
   fillSwap = async (signedOrder, takerAddress, takerAssetAmount) => {
-    let txHash = await this.contractWrappers.exchange.fillOrderAsync(
+    const txHash = await this.contractWrappers.exchange.fillOrderAsync(
       signedOrder,
       new BigNumber(takerAssetAmount),
       takerAddress,
@@ -110,7 +133,7 @@ export class CowriProvider extends Provider {
     return txHash;
   };
 
-  //Returns the signed order
+  // Returns the signed order
   signOrder = async (orderToSign, makerAddress) => {
     const signature = await signatureUtils.ecSignOrderAsync(
       this.providerEngine,

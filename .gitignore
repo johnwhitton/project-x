@@ -24,3 +24,6 @@ yarn-error.log*
 
 # 0x ganache snapshot
 /0x_ganache_snapshot
+
+# sensitive data
+/config/parityPassword.json

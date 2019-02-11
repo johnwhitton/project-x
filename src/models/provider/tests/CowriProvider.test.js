@@ -7,12 +7,12 @@ it('Test general', async () => {
   const tokenToSend = new Token(
     'USDA',
     '0x802804f1eb96Fcf3802FceDF6648F55Ddae95208'.toLowerCase(),
-    3,
+    0.03,
   );
   const tokenToReceive = new Token(
     'USDB',
     '0xAd31dA2bfd3113394745954445359caacb54BFef'.toLowerCase(),
-    4,
+    0.04,
   );
   const senderAddress = '0x141cc50934F7911D7f85051A7F3C14c70b6BcE3C'.toLowerCase();
   const receiverAddress = '0xB4187986Be998b5BA92f5c8fCd36d13fF5136D80'.toLowerCase();
