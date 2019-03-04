@@ -31,7 +31,7 @@ import {Token} from '../../Token';
 });*/
 
 describe('CowriProvider', () => {
-  it('Should successfully send tokens from one user to another', async done => {
+  it('Should successfully send tokens from one user to another', async () => {
     const provider = new CowriProvider();
     const tokenToSend = new Token(
       'USDA',
@@ -42,6 +42,5 @@ describe('CowriProvider', () => {
     const receiverAddress = '0xB4187986Be998b5BA92f5c8fCd36d13fF5136D80'.toLowerCase();
     await provider.sendToken(senderAddress, receiverAddress, tokenToSend);
     //TODO include logic to check balances
-    done();
   });
 });
